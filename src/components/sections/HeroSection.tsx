@@ -16,8 +16,8 @@ export function HeroSection() {
   return (
     <header className="relative overflow-hidden text-white  min-h-screen ">
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-purple-700 to-pink-900" />
-      <div className="absolute inset-0 bg-white/10 backdrop-blur-xl" />
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900" />
+      <div className="absolute inset-0 bg-white/10 backdrop-blur-2xl" />
 
       <div className="container relative z-10 mx-auto px-6 py-24 md:py-32">
         <div className="flex flex-col items-center text-center max-w-6xl mx-auto">
@@ -62,9 +62,9 @@ export function HeroSection() {
             className="max-w-4xl text-xl md:text-2xl leading-relaxed text-foreground/80 mb-12"
           >
             A comprehensive collection of
-            <strong className="text-pink-400">stunning</strong>,
+            <strong className="text-pink-400"> stunning</strong>,
             <strong className="text-green-300"> lightweight</strong>, and
-            <strong className="text-blue-400"> fully customizable</strong>
+            <strong className="text-blue-400"> fully customizable </strong>
             loading components for React applications. Perfect for modern web
             experiences with dark aesthetics.
           </motion.p>
@@ -89,7 +89,12 @@ export function HeroSection() {
               Explore Loaders
             </Button>
             <Button
-              onClick={() => window.open("https://github.com", "_blank")}
+              onClick={() =>
+                window.open(
+                  "https://github.com/Mostafashadow1/react-loadly",
+                  "_blank"
+                )
+              }
               size="lg"
               className={`${buttonBase} bg-gradient-to-r from-gray-900 to-gray-700 text-white`}
             >
