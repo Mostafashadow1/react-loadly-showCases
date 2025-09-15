@@ -21,7 +21,6 @@ import "react-loadly/styles.css";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { FeaturesSection } from "@/components/sections/FeaturesSection";
 import { LoadersShowcaseSection } from "@/components/sections/LoadersShowcaseSection";
-import { PropsApiSection } from "@/components/sections/PropsApiSection";
 import { PerformanceBestPracticesSection } from "@/components/sections/PerformanceBestPracticesSection";
 import { WhyUseLibrarySection } from "@/components/sections/WhyUseLibrarySection";
 import { FooterSection } from "@/components/sections/FooterSection";
@@ -60,12 +59,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen w-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950">
-      {/* Hero Section */}
       <HeroSection />
-
       <InstallationSection />
-
-      {/* Features Section */}
       <FeaturesSection />
 
       {/* Loaders Showcase Section */}
@@ -86,9 +81,6 @@ export default function App() {
         setLoaderText={setLoaderText}
         activeLoader={activeLoader}
       />
-
-      {/* Props & API Section */}
-      <PropsApiSection />
 
       {/* Performance & Best Practices Section */}
       <PerformanceBestPracticesSection />

@@ -16,7 +16,7 @@ export function HeroSection() {
   return (
     <header className="relative overflow-hidden text-white  min-h-screen ">
       {/* Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600" />
+      <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-purple-700 to-pink-900" />
       <div className="absolute inset-0 bg-white/10 backdrop-blur-xl" />
 
       <div className="container relative z-10 mx-auto px-6 py-24 md:py-32">
