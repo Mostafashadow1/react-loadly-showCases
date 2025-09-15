@@ -57,7 +57,6 @@ export type LoaderProps =
   | TextLoaderProps
   | SecondaryColorLoaderProps
   | SkeletonLoaderProps
-  | ShimmerLoaderProps
   | ILogoLoaderProps
   | ElementLoaderProps;
 

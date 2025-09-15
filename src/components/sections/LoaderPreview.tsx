@@ -1,0 +1,85 @@
+import { useMemo } from "react";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { truncateText } from "@/utils/truncateText";
+import type { LoaderKind, LoaderPropsMap } from "@/types/ILoaderConfig";
+
+interface LoaderPreviewProps {
+  activeLoaderData: any;
+  currentProps: Partial<LoaderPropsMap[LoaderKind]>;
+}
+
+export function LoaderPreview({
+  activeLoaderData,
+  currentProps,
+}: LoaderPreviewProps) {
+  const ActiveLoaderComponent = activeLoaderData.component;
+
+  // Filter props to only include those relevant to the current loader
+  const relevantProps = useMemo(() => {
+    const props: Record<string, unknown> = {};
+
+    // Add common props
+    activeLoaderData.commonProps.forEach(
+      (prop: keyof LoaderPropsMap[LoaderKind]) => {
+        if (currentProps[prop] !== undefined) {
+          props[prop] = currentProps[prop];
+        }
+      }
+    );
+
+    // Add unique props
+    activeLoaderData.uniqueProps.forEach(
+      (prop: keyof LoaderPropsMap[LoaderKind]) => {
+        if (currentProps[prop] !== undefined) {
+          props[prop] = currentProps[prop];
+        }
+      }
+    );
+
+    // Ensure showText is always true for proper display
+    props.showText = true;
+
+    // Handle special cases for specific loaders
+    if (activeLoaderData.title === "Skeleton Loader") {
+      const skeletonProps = currentProps as Partial<LoaderPropsMap["skeleton"]>;
+      props.shimmer =
+        skeletonProps.shimmer !== undefined ? skeletonProps.shimmer : true;
+      props.lines = skeletonProps.lines || 1;
+      props.variant = skeletonProps.variant || "avatar";
+    }
+
+    if (activeLoaderData.title === "Typing Loader") {
+      const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
+      props.loop = textProps.loop !== undefined ? textProps.loop : true;
+    }
+
+    return props;
+  }, [activeLoaderData, currentProps]);
+
+  return (
+    <div className="flex flex-col items-center justify-center bg-gray-900/50 border-r border-gray-800 p-6 h-full">
+      <div className="mb-6">
+        <ActiveLoaderComponent
+          {...(relevantProps as LoaderPropsMap[LoaderKind])}
+        />
+      </div>
+
+      {/* Props Preview */}
+      <div className="text-center space-y-2 w-full">
+        <h4 className="font-semibold text-gray-300">Current Props:</h4>
+        <ScrollArea className="h-40 w-full">
+          <div className="text-sm text-gray-400 space-y-1">
+            {Object.entries(relevantProps).map(([key, value]) => (
+              <div key={key} className="flex justify-between">
+                <span>{key}: </span>
+                <span className="text-indigo-300">
+                  {truncateText(String(value), 20)}
+                </span>
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
+      </div>
+    </div>
+  );
+}

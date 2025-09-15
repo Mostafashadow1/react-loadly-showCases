@@ -41,9 +41,9 @@ export function WhyUseLibrarySection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.7 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold mb-6 text-white"
+            className="text-4xl md:text-6xl font-bold mb-6 text-white  "
           >
-            Why Use React Loaders Kit?
+            Use React Loadly
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

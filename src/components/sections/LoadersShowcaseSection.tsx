@@ -1,3 +1,4 @@
+import { useState, useMemo, useCallback } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
@@ -6,227 +7,279 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
-import { Copy } from "lucide-react";
+import { Play, Pause, RotateCcw } from "lucide-react";
 import { motion } from "framer-motion";
-import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { LOADER_CONFIGS } from "@/utils/LoaderConfig";
+import { LoaderPreview } from "@/components/sections/LoaderPreview";
+import { LoaderControls } from "@/components/sections/LoaderControls";
+import { CodeSnippet } from "@/components/sections/CodeSnippet";
+import {
+  COMMON_CONTROLS,
+  UNIQUE_CONTROLS,
+  DEFAULT_PROPS,
+} from "@/utils/loaderPropsConfig";
+import type { LoaderKind } from "@/types/ILoaderConfig";
+import type { PropControls } from "@/utils/loaderPropsConfig";
 
-import type { ILoader } from "@/types/ILoader";
+type PropValues = Record<string, string | number | boolean | undefined>;
 
-interface LoadersShowcaseSectionProps {
-  loaders: ILoader[];
-  setActiveLoader: (name: string) => void;
-  loaderSize: number;
-  setLoaderSize: (size: number) => void;
-  loaderSpeed: number;
-  setLoaderSpeed: (speed: number) => void;
-  loaderColor: string;
-  setLoaderColor: (color: string) => void;
-  loaderSecondaryColor: string;
-  setLoaderSecondaryColor: (color: string) => void;
-  loaderCount: number;
-  setLoaderCount: (count: number) => void;
-  loaderText: string;
-  setLoaderText: (text: string) => void;
-  activeLoader: string;
-}
+export function LoadersShowcaseSection() {
+  const [activeLoader, setActiveLoader] = useState<LoaderKind>("spin");
+  const [isPlaying, setIsPlaying] = useState(true);
 
-export function LoadersShowcaseSection({
-  loaders,
-  setActiveLoader,
-  loaderSize,
-  setLoaderSize,
-  loaderSpeed,
-  setLoaderSpeed,
-  loaderColor,
-  setLoaderColor,
-  // loaderSecondaryColor,
-  // setLoaderSecondaryColor,
-  // loaderCount,
-  // setLoaderCount,
-  loaderText,
-  setLoaderText,
-  activeLoader,
-}: LoadersShowcaseSectionProps) {
-  const activeLoaderData =
-    loaders.find((l) => l.name === activeLoader) || loaders[0];
-  const ActiveLoaderComponent = activeLoaderData.component;
+  const [propValues, setPropValues] = useState<PropValues>(() => {
+    const initialValues: PropValues = {};
+    Object.keys(DEFAULT_PROPS).forEach((prop) => {
+      initialValues[prop] = DEFAULT_PROPS[prop];
+    });
+    return initialValues;
+  });
 
-  const generateCodeSnippet = () => {
-    return `import { ${activeLoaderData.title} } from 'react-loadly';
+  const activeLoaderData = useMemo(() => {
+    return LOADER_CONFIGS[activeLoader] || Object.values(LOADER_CONFIGS)[0];
+  }, [activeLoader]);
 
-function MyComponent() {
-  return (
-    <${activeLoaderData.title}
-      size={${loaderSize}}
-      color="${loaderColor}"
-      speed={${loaderSpeed}}
-    />
+  const currentProps = useMemo(() => {
+    const props: PropValues = {};
+
+    // Add common props
+    activeLoaderData.commonProps.forEach((prop) => {
+      if (propValues[prop] !== undefined) {
+        props[prop] = propValues[prop];
+      }
+    });
+
+    // Add unique props
+    activeLoaderData.uniqueProps.forEach((prop) => {
+      if (propValues[prop] !== undefined) {
+        props[prop] = propValues[prop];
+      }
+    });
+
+    // Handle special cases
+    if (!isPlaying) {
+      props.speed = 0;
+    }
+
+    return props;
+  }, [activeLoaderData, propValues, isPlaying]);
+
+  const propControls = useMemo((): PropControls => {
+    const controls: PropControls = {};
+
+    // Add common controls
+    activeLoaderData.commonProps.forEach((prop) => {
+      const controlKey = prop as keyof typeof COMMON_CONTROLS;
+      if (COMMON_CONTROLS[controlKey]) {
+        controls[prop] = COMMON_CONTROLS[controlKey];
+      }
+    });
+
+    // Add unique controls
+    activeLoaderData.uniqueProps.forEach((prop) => {
+      const controlKey = prop as keyof typeof UNIQUE_CONTROLS;
+      if (UNIQUE_CONTROLS[controlKey]) {
+        controls[prop] = UNIQUE_CONTROLS[controlKey];
+      }
+    });
+
+    return controls;
+  }, [activeLoaderData]);
+
+  // Handle prop value changes
+  const handlePropChange = useCallback(
+    (propName: string, value: string | number | boolean) => {
+      setPropValues((prev) => ({
+        ...prev,
+        [propName]: value,
+      }));
+    },
+    []
   );
-}`;
-  };
 
-  const copyToClipboard = (text: string) => {
-    navigator.clipboard.writeText(text);
-  };
+  // Reset all props to default values
+  const resetProps = useCallback(() => {
+    const resetValues: PropValues = {};
+    Object.keys(DEFAULT_PROPS).forEach((prop) => {
+      resetValues[prop] = DEFAULT_PROPS[prop];
+    });
+    setPropValues(resetValues);
+  }, []);
 
   return (
     <section className="py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white">
       <div className="container mx-auto px-4">
-        {/* Title */}
+        {/* Enhanced Header */}
         <div className="text-center mb-16">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="text-3xl md:text-4xl font-bold mb-4 text-white"
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"
           >
-            Loader Collection
+            React Loadly Collection
           </motion.h1>
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto">
-            Explore our collection of beautiful loaders. Click on any loader to
-            customize it.
-          </p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8"
+          >
+            Discover beautiful, customizable loading components for React. Each
+            loader supports dynamic props for ultimate flexibility in your
+            applications.
+          </motion.p>
+
+          {/* Common Props Highlight */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+            className="flex flex-wrap justify-center gap-2 mb-8"
+          >
+            {["size", "speed", "color", "loadingText"].map((prop) => (
+              <Badge key={prop} variant="secondary" className="px-3 py-1">
+                {prop}
+              </Badge>
+            ))}
+            <Badge variant="outline" className="px-3 py-1">
+              + unique props per loader
+            </Badge>
+          </motion.div>
         </div>
 
-        {/* Loader grid */}
+        {/* Enhanced Loader Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
-          {loaders.map((loader) => (
-            <Dialog key={loader.name}>
+          {Object.entries(LOADER_CONFIGS).map(([key, loader]) => (
+            <Dialog key={key}>
               <DialogTrigger asChild>
                 <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, ease: "easeOut" }}
-                  className="group"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="group cursor-pointer"
+                  onClick={() => setActiveLoader(key as LoaderKind)}
                 >
                   <Card
-                    className="cursor-pointer border border-gray-800/70 bg-gray-900/40 backdrop-blur-md 
-                               rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-indigo-500/20 
-                               transition-all duration-300"
-                    onClick={() => setActiveLoader(loader.name)}
+                    className="border border-gray-800/70 bg-gray-900/40 backdrop-blur-sm 
+                               rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/25 
+                               hover:border-indigo-500/30 transition-all duration-500 group-hover:scale-105"
                   >
                     <CardContent className="p-6 flex flex-col items-center">
                       <div className="flex justify-center mb-4 h-24 items-center">
-                        <loader.component size={40} color={loaderColor} />
+                        <loader.component
+                          src={
+                            loader.interface == "ILogoLoaderProps"
+                              ? (propValues?.src as string)
+                              : ""
+                          }
+                          animationType="spin"
+                          glowIntensity={0.5}
+                          size={40}
+                          color={propValues.color as string}
+                          speed={1}
+                          loop={
+                            loader.interface == "ITextLoaderProps"
+                              ? (propValues.loop as boolean)
+                              : undefined
+                          }
+                        />
                       </div>
-                      <h3 className="font-semibold text-white text-center">
+                      <h3 className="font-semibold text-white text-center mb-2">
                         {loader.title}
                       </h3>
+                      <Badge variant="outline" className="text-xs">
+                        {loader.interface}
+                      </Badge>
                     </CardContent>
                   </Card>
                 </motion.div>
               </DialogTrigger>
 
-              {/* Dialog */}
+              {/* Enhanced Dialog */}
               <DialogContent
-                className="max-w-5xl w-[90vw] h-[90vh] overflow-hidden 
-                                         bg-gradient-to-br from-gray-900 to-gray-950 
-                                         border border-gray-800 rounded-2xl shadow-xl text-white p-0"
+                className="max-w-7xl w-[95vw] h-[80vh] overflow-hidden
+                           bg-gradient-to-br from-gray-900 to-gray-950 
+                           border border-gray-800 rounded-2xl shadow-2xl text-white p-3"
               >
-                <DialogHeader className="p-6 border-b border-gray-800">
-                  <DialogTitle className="text-xl font-bold">
-                    {loader.title}
-                  </DialogTitle>
-                </DialogHeader>
-
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
-                  {/* Preview */}
-                  <div className="flex items-center justify-center bg-gray-900/50 border-r border-gray-800 p-6">
-                    <ActiveLoaderComponent
-                      size={loaderSize}
-                      color={loaderColor}
-                    />
-                  </div>
-
-                  {/* Controls */}
-                  <ScrollArea className="p-6 space-y-6">
+                <DialogHeader className="p-6 border-b border-gray-800 bg-gradient-to-r from-indigo-500/10 to-purple-500/10">
+                  <div className="flex items-center justify-between">
                     <div>
-                      <Label className="text-gray-300">Size</Label>
-                      <Slider
-                        min={20}
-                        max={100}
-                        step={1}
-                        value={[loaderSize]}
-                        onValueChange={(value) => setLoaderSize(value[0])}
-                        className="mt-2"
-                      />
-                      <Badge variant="outline" className="mt-1">
-                        {loaderSize}px
+                      <DialogTitle className="text-2xl font-bold mb-2">
+                        {loader.title}
+                      </DialogTitle>
+                      <Badge variant="outline" className="mr-2">
+                        {loader.interface}
+                      </Badge>
+                      <Badge variant="secondary">
+                        {loader.commonProps.length + loader.uniqueProps.length}{" "}
+                        Props
                       </Badge>
                     </div>
-
-                    <div>
-                      <Label className="text-gray-300">Speed</Label>
-                      <Slider
-                        min={0.1}
-                        max={5}
-                        step={0.1}
-                        value={[loaderSpeed]}
-                        onValueChange={(value) => setLoaderSpeed(value[0])}
-                        className="mt-2"
-                      />
-                      <Badge variant="secondary" className="mt-1">
-                        {loaderSpeed}x
-                      </Badge>
-                    </div>
-
-                    <div>
-                      <Label className="text-gray-300">Primary Color</Label>
-                      <div className="flex items-center gap-3 mt-2">
-                        <div
-                          className="w-8 h-8 rounded-md border border-gray-700"
-                          style={{ backgroundColor: loaderColor }}
-                        />
-                        <Input
-                          type="color"
-                          value={loaderColor}
-                          onChange={(e) => setLoaderColor(e.target.value)}
-                          className="w-16 h-10 cursor-pointer"
-                        />
-                        <Input
-                          type="text"
-                          value={loaderColor}
-                          onChange={(e) => setLoaderColor(e.target.value)}
-                          className="flex-1"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label className="text-gray-300">Text</Label>
-                      <Input
-                        type="text"
-                        value={loaderText}
-                        onChange={(e) => setLoaderText(e.target.value)}
-                        placeholder="Loading..."
-                        className="mt-2"
-                      />
-                    </div>
-                  </ScrollArea>
-
-                  {/* Code Snippet */}
-                  <div className="flex flex-col p-6 border-l border-gray-800">
-                    <div className="flex justify-between items-center mb-2">
-                      <Label className="text-gray-300">Code Snippet</Label>
+                    <div className="flex gap-2">
                       <Button
-                        onClick={() => copyToClipboard(generateCodeSnippet())}
-                        size="sm"
+                        onClick={() => setIsPlaying(!isPlaying)}
                         variant="outline"
+                        size="sm"
                         className="gap-2"
                       >
-                        <Copy className="w-4 h-4" /> Copy
+                        {isPlaying ? (
+                          <Pause className="w-4 h-4" />
+                        ) : (
+                          <Play className="w-4 h-4" />
+                        )}
+                        {isPlaying ? "Pause" : "Play"}
+                      </Button>
+                      <Button
+                        onClick={resetProps}
+                        variant="outline"
+                        size="sm"
+                        className="gap-2"
+                      >
+                        <RotateCcw className="w-4 h-4" />
+                        Reset
                       </Button>
                     </div>
-                    <ScrollArea className="flex-1 rounded-lg border border-gray-800 bg-gray-900/60 p-4">
-                      <pre className="text-sm text-indigo-100 font-mono whitespace-pre-wrap">
-                        {generateCodeSnippet()}
-                      </pre>
-                    </ScrollArea>
+                  </div>
+                </DialogHeader>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full min-h-0">
+                  {/* Enhanced Preview */}
+                  <div className="md:col-span-1 flex flex-col min-h-0">
+                    <div className="flex-1 overflow-y-auto scrollbar-none">
+                      <LoaderPreview
+                        activeLoaderData={activeLoaderData}
+                        currentProps={currentProps}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Enhanced Controls */}
+                  <div className="md:col-span-1 p-6 space-y-6 border-l border-gray-800 flex flex-col min-h-0">
+                    <div className="flex-1 overflow-y-auto scrollbar-none">
+                      <h4 className="font-semibold text-gray-200 mb-4 flex items-center gap-2">
+                        <span className="w-2 h-2 bg-indigo-500 rounded-full"></span>
+                        Customize Properties
+                      </h4>
+                      <LoaderControls
+                        controls={propControls}
+                        values={propValues}
+                        onChange={handlePropChange}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Enhanced Code Snippet */}
+                  <div className="md:col-span-1 p-6 border-l border-gray-800 flex flex-col min-h-0">
+                    <div className="flex-1 overflow-y-auto scrollbar-none">
+                      <CodeSnippet
+                        activeLoaderData={activeLoaderData}
+                        currentProps={currentProps}
+                      />
+                    </div>
                   </div>
                 </div>
               </DialogContent>

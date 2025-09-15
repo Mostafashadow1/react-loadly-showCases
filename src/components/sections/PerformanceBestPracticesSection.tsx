@@ -55,7 +55,7 @@ export function PerformanceBestPracticesSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold mb-4 text-white"
+            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"
           >
             Performance & Best Practices
           </motion.h2>

@@ -54,19 +54,19 @@ export function HeroSection() {
               </h1>
             </div>
           </motion.div>
-
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.6 }}
             className="max-w-4xl text-xl md:text-2xl leading-relaxed text-foreground/80 mb-12"
           >
-            A comprehensive collection of
-            <strong className="text-pink-400"> stunning</strong>,
-            <strong className="text-green-300"> lightweight</strong>, and
-            <strong className="text-blue-400"> fully customizable </strong>
-            loading components for React applications. Perfect for modern web
-            experiences with dark aesthetics.
+            React Loadly is a{" "}
+            <strong className="text-pink-400">modern, high-performance</strong>{" "}
+            library of React loaders, spinners, and loading indicators. It’s
+            built with <strong className="text-green-300">TypeScript</strong>,
+            optimized for{" "}
+            <strong className="text-blue-400">Next.js / SSR</strong>, and
+            designed with accessibility and developer experience in mind.
           </motion.p>
 
           {/* Buttons */}

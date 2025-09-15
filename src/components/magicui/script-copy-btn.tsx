@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { Check, Copy } from "lucide-react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
-import { HTMLAttributes, useEffect, useState } from "react";
+import { type HTMLAttributes, useEffect, useState } from "react";
 
 interface ScriptCopyBtnProps extends HTMLAttributes<HTMLDivElement> {
   showMultiplePackageOptions?: boolean;
@@ -63,7 +63,7 @@ export function ScriptCopyBtn({
     <div
       className={cn(
         "mx-auto flex max-w-md items-center justify-center",
-        className,
+        className
       )}
     >
       <div className="w-full space-y-2">

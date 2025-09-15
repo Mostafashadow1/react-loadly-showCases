@@ -47,15 +47,15 @@ export function FeaturesSection() {
       <div className="container mx-auto px-6 max-w-5xl">
         {/* Title */}
         <div className="text-center mb-16">
-          <motion.h1
+          <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.1, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-xl md:text-3xl xl:text-4xl font-extrabold mb-4 "
+            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"
           >
             Why React-Loadly?
-          </motion.h1>
+          </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
