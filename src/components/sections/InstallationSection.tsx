@@ -1,144 +1,105 @@
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 
-export function InstallationSection() {
-  const [copiedStep, setCopiedStep] = useState<number | null>(null);
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
 
-  const copyToClipboard = (text: string, step: number) => {
-    navigator.clipboard.writeText(text);
-    setCopiedStep(step);
-    setTimeout(() => setCopiedStep(null), 2000);
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
   };
 
   return (
-    <div className="mt-20 max-w-4xl mx-auto">
-      <div className="bg-gradient-to-br from-gray-900/50 to-gray-800/50 backdrop-blur-lg rounded-2xl p-1 border border-white/10 shadow-2xl">
-        <div className="flex items-center justify-between px-4 py-3 bg-gray-800/80 rounded-t-xl">
-          <div className="flex space-x-2">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-          </div>
-          <span className="text-sm text-gray-300">Installation Guide</span>
-          <div></div>
-        </div>
+    <Button
+      variant="ghost"
+      size="icon"
+      onClick={handleCopy}
+      className="ml-2 hover:bg-white/10"
+    >
+      {copied ? (
+        <Check className="h-4 w-4 text-green-400" />
+      ) : (
+        <Copy className="h-4 w-4 text-gray-400" />
+      )}
+    </Button>
+  );
+}
 
-        <div className="p-6 space-y-6">
-          {/* Step 1: Install the package */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500 text-white text-xs font-bold">
-                1
-              </div>
-              <h3 className="text-lg font-semibold text-white">
-                Install the package
-              </h3>
-            </div>
+export function InstallationSection() {
+  return (
+    <section className="py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white">
+      <div className="container mx-auto px-6 max-w-4xl">
+        {/* Step 1 */}
+        <h2 className="text-3xl font-extrabold mb-3">Install React-Loadly</h2>
+        <p className="mb-8 text-gray-400">
+          Choose your favorite package manager to install{" "}
+          <code>react-loadly</code>.
+        </p>
 
-            <div className="flex items-center group bg-gray-800/50 rounded-lg px-4 py-3">
-              <code className="flex-1 text-green-400 font-mono">
-                npm install react-loaders-kit
-              </code>
-              <Button
-                onClick={() =>
-                  copyToClipboard("npm install react-loaders-kit", 1)
-                }
-                variant="ghost"
-                size="sm"
-                className="ml-2 text-gray-300 hover:text-white hover:bg-gray-700"
+        <Tabs defaultValue="npm" className="w-full">
+          <TabsList className="grid grid-cols-4 bg-gray-800/40 p-1 rounded-xl border border-gray-700">
+            {["npm", "pnpm", "yarn", "bun"].map((pm) => (
+              <TabsTrigger
+                key={pm}
+                value={pm}
+                className="data-[state=active]:text-white data-[state=active]:border-white
+                           data-[state=inactive]:text-gray-400 data-[state=inactive]:border-gray-600
+                           border rounded-lg px-3 py-1.5 transition-colors"
               >
-                {copiedStep === 1 ? (
-                  <Check className="w-4 h-4 text-green-400" />
-                ) : (
-                  <Copy className="w-4 h-4" />
-                )}
-              </Button>
-            </div>
+                {pm}
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
-            <div className="flex gap-2 mt-2">
-              <Button
-                onClick={() => copyToClipboard("yarn add react-loaders-kit", 1)}
-                variant="outline"
-                size="sm"
-                className="text-xs h-8 border-gray-600 text-gray-300 hover:bg-gray-700"
-              >
-                yarn
-              </Button>
-              <Button
-                onClick={() => copyToClipboard("pnpm add react-loaders-kit", 1)}
-                variant="outline"
-                size="sm"
-                className="text-xs h-8 border-gray-600 text-gray-300 hover:bg-gray-700"
-              >
-                pnpm
-              </Button>
-            </div>
-          </div>
+          {[
+            { value: "npm", text: "npm install react-loadly" },
+            { value: "pnpm", text: "pnpm i react-loadly" },
+            { value: "yarn", text: "yarn add react-loadly" },
+            { value: "bun", text: "bun add react-loadly" },
+          ].map(({ value, text }) => (
+            <TabsContent key={value} value={value}>
+              <Card className="bg-gray-900/60 backdrop-blur-md border border-gray-700/70 hover:border-white/30 transition-all shadow-lg rounded-2xl overflow-hidden">
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <CardTitle className="text-white font-semibold">
+                    Install with {value}
+                  </CardTitle>
+                  <CopyButton text={text} />
+                </CardHeader>
+                <CardContent>
+                  <code className="block bg-gradient-to-r from-gray-800 to-gray-700 rounded-md px-4 py-3 text-sm text-cyan-400 font-mono">
+                    {text}
+                  </code>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          ))}
+        </Tabs>
 
-          {/* Step 2: Import CSS */}
-          <div className="space-y-3 pt-4 border-t border-gray-700/50">
-            <div className="flex items-center gap-2 mb-2">
-              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-indigo-500 text-white text-xs font-bold">
-                2
-              </div>
-              <h3 className="text-lg font-semibold text-white">
-                Import CSS styles
-              </h3>
-            </div>
+        {/* Step 2 */}
+        <h2 className="text-3xl mt-16 mb-3 font-extrabold">Import Styles</h2>
+        <p className="mb-8 text-gray-400">
+          To ensure loaders look correct, import the default styles into your
+          entry file.
+        </p>
 
-            <p className="text-gray-300 text-sm">
-              Add this import to your main application file (e.g.,{" "}
-              <code className="text-green-400">main.tsx</code> or{" "}
-              <code className="text-green-400">App.tsx</code>):
-            </p>
-
-            <div className="flex items-center group bg-gray-800/50 rounded-lg px-4 py-3">
-              <code className="flex-1 text-green-400 font-mono">
-                import "react-loader-kit/styles.css";
-              </code>
-              <Button
-                onClick={() =>
-                  copyToClipboard('import "react-loader-kit/styles.css";', 2)
-                }
-                variant="ghost"
-                size="sm"
-                className="ml-2 text-gray-300 hover:text-white hover:bg-gray-700"
-              >
-                {copiedStep === 2 ? (
-                  <Check className="w-4 h-4 text-green-400" />
-                ) : (
-                  <Copy className="w-4 h-4" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          {/* Usage tip */}
-          <div className="pt-4 border-t border-gray-700/50">
-            <div className="flex items-start gap-3">
-              <div className="mt-1 text-indigo-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-              <p className="text-gray-300 text-sm">
-                <span className="font-medium text-white">Tip:</span> Make sure
-                to import the CSS file to ensure loaders are styled correctly.
-              </p>
-            </div>
-          </div>
-        </div>
+        <Card className="bg-gray-900/60 backdrop-blur-md border border-gray-700/70 hover:border-white/30 transition-all shadow-lg rounded-2xl overflow-hidden">
+          <CardHeader className="flex flex-row items-center justify-between">
+            <CardTitle className="text-white font-semibold">
+              Add styles to your main file
+            </CardTitle>
+            <CopyButton text={'import "react-loadly/styles.css"'} />
+          </CardHeader>
+          <CardContent>
+            <code className="block bg-gradient-to-r from-gray-800 to-gray-700 rounded-md px-4 py-3 text-sm text-pink-400 font-mono">
+              import "react-loadly/styles.css"
+            </code>
+          </CardContent>
+        </Card>
       </div>
-    </div>
+    </section>
   );
 }
