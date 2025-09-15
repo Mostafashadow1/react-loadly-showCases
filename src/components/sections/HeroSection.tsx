@@ -1,144 +1,122 @@
 import { Button } from "@/components/ui/button";
-import { InstallationSection } from "./InstallationSection";
-import type { ILoader } from "@/types/ILoader";
-import { Github, Play } from "lucide-react";
+import { Github, Play, Sparkles, StarIcon } from "lucide-react";
+import { motion } from "framer-motion";
 
-interface HeroSectionProps {
-  activeLoaderData: ILoader;
-}
+const headingClasses = "text-5xl md:text-7xl font-extrabold tracking-tight";
+const buttonBase =
+  "group relative px-10 py-6 text-lg font-semibold rounded-2xl shadow-xl overflow-hidden transition-transform hover:scale-105 hover:shadow-2xl";
 
-export function HeroSection({ activeLoaderData }: HeroSectionProps) {
-  const ActiveLoaderComponent = activeLoaderData.component;
+const features = [
+  "100% Free & Open Source",
+  "Fully Customizable",
+  "Lightweight & Performant",
+];
 
+export function HeroSection() {
   return (
-    <header className="py-20 md:py-32 text-white relative overflow-hidden">
-      {/* Liquid glass background effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500"></div>
-      <div className="absolute inset-0 bg-white/10 backdrop-blur-xl"></div>
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCI+CjxyZWN0IHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgZmlsbD0ibm9uZSIvPgo8Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjEiLz4KPC9zdmc+')] opacity-20"></div>
+    <header className="relative overflow-hidden text-white  min-h-screen ">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600" />
+      <div className="absolute inset-0 bg-white/10 backdrop-blur-xl" />
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          <div className="flex-1 text-center lg:text-left">
-            <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
-              <span className="block">Beautiful React</span>
-              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-pink-300 mt-2">
+      <div className="container relative z-10 mx-auto px-6 py-24 md:py-32">
+        <div className="flex flex-col items-center text-center max-w-6xl mx-auto">
+          {/* Powered By Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="my-6 inline-flex items-center gap-3 rounded-full border border-white/30 
+             bg-white/5 px-6 py-2 backdrop-blur-md shadow-md"
+          >
+            <Sparkles className="w-5 h-5 text-accent animate-pulse" />
+            <span className="text-base font-medium text-foreground/90">
+              Powered by
+            </span>
+            <span className="bg-pink-400 bg-clip-text text-lg font-bold text-transparent tracking-wide">
+              react-loadly
+            </span>
+          </motion.div>
+
+          {/* Title Row */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.7 }}
+            className="space-y-6 mb-8"
+          >
+            <div>
+              <h1 className={headingClasses}>Beautiful React</h1>
+              <h1
+                className={`${headingClasses} bg-gradient-to-r from-pink-500 to-purple-300  bg-clip-text text-transparent`}
+              >
                 Loaders Collection
-              </span>
-            </h1>
+              </h1>
+            </div>
+          </motion.div>
 
-            <p className="text-xl max-w-2xl mx-auto lg:mx-0 mb-10 opacity-90">
-              A collection of beautiful, customizable loading components for
-              React applications. Fully accessible, lightweight, and easy to
-              implement.
-            </p>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+            className="max-w-4xl text-xl md:text-2xl leading-relaxed text-foreground/80 mb-12"
+          >
+            A comprehensive collection of
+            <strong className="text-pink-400">stunning</strong>,
+            <strong className="text-green-300"> lightweight</strong>, and
+            <strong className="text-blue-400"> fully customizable</strong>
+            loading components for React applications. Perfect for modern web
+            experiences with dark aesthetics.
+          </motion.p>
 
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 mb-12">
-              <Button
-                onClick={() =>
-                  document
-                    .getElementById("loaders")
-                    ?.scrollIntoView({ behavior: "smooth" })
-                }
-                className="px-8 py-6 text-lg bg-white text-primary hover:bg-white/90 rounded-xl shadow-elegant transition-smooth transform hover:-translate-y-1"
+          {/* Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="flex flex-col sm:flex-row gap-6 mb-16"
+          >
+            <Button
+              onClick={() =>
+                document
+                  .getElementById("loaders")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              size="lg"
+              className={`${buttonBase} bg-gradient-to-r from-pink-300 to-pink-400 text-black`}
+            >
+              <Play className="mr-2 h-5 w-5" />
+              Explore Loaders
+            </Button>
+            <Button
+              onClick={() => window.open("https://github.com", "_blank")}
+              size="lg"
+              className={`${buttonBase} bg-gradient-to-r from-gray-900 to-gray-700 text-white`}
+            >
+              <Github className="mr-2 h-5 w-5" />
+              Star on GitHub
+            </Button>
+          </motion.div>
+          {/* Features */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.3, duration: 0.6 }}
+            className=" grid grid-cols-1 gap-6 sm:grid-cols-3 max-w-5xl mx-auto"
+          >
+            {features.map((feature, idx) => (
+              <div
+                key={idx}
+                className="flex items-center gap-3 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md px-5 py-4 text-lg font-medium shadow-md hover:shadow-lg transition-shadow"
               >
-                <Play className="w-5 h-5 mr-2" />
-                Explore Loaders
-              </Button>
-
-              <Button
-                onClick={() => window.open("https://github.com", "_blank")}
-                variant="outline"
-                className="px-8 py-6 text-lg  text-white border-white/20 hover:bg-white/20 rounded-xl shadow-lg transition-smooth transform hover:-translate-y-1"
-              >
-                <Github className="w-5 h-5 mr-2" />
-                Star on GitHub
-              </Button>
-            </div>
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6">
-              <div className="flex items-center">
-                <div className="bg-green-500 rounded-full p-1 mr-2">
-                  <svg
-                    className="w-4 h-4 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
+                <div className="flex h-5 w-5 p-1 items-center justify-center rounded-full bg-green-500/90 shadow-inner">
+                  <StarIcon />
                 </div>
-                <span>100% Free & Open Source</span>
+                <span className="text-base">{feature}</span>
               </div>
-              <div className="flex items-center">
-                <div className="bg-green-500 rounded-full p-1 mr-2">
-                  <svg
-                    className="w-4 h-4 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                </div>
-                <span>Fully Customizable</span>
-              </div>
-              <div className="flex items-center">
-                <div className="bg-green-500 rounded-full p-1 mr-2">
-                  <svg
-                    className="w-4 h-4 text-white"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
-                </div>
-                <span>Lightweight & Performant</span>
-              </div>
-            </div>
-          </div>
-
-          <div className=" flex justify-center">
-            <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-400 to-purple-500 rounded-2xl blur-lg opacity-30 animate-pulse"></div>
-              <div className="relative bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl">
-                <div className="flex justify-center mb-6">
-                  <ActiveLoaderComponent
-                    size={80}
-                    speed={1}
-                    color="#ffffff"
-                    count={3}
-                    loadingText="Loading..."
-                  />
-                </div>
-                <div className="text-center">
-                  <h3 className="text-xl font-bold mb-2">
-                    {activeLoaderData.title}
-                  </h3>
-                  <p className="text-indigo-100">Preview</p>
-                </div>
-              </div>
-            </div>
-          </div>
+            ))}
+          </motion.div>
         </div>
-
-        {/* Installation Commands */}
-        <InstallationSection />
       </div>
     </header>
   );

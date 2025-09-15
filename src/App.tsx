@@ -26,6 +26,7 @@ import { PerformanceBestPracticesSection } from "@/components/sections/Performan
 import { WhyUseLibrarySection } from "@/components/sections/WhyUseLibrarySection";
 import { FooterSection } from "@/components/sections/FooterSection";
 import type { ILoader } from "./types/ILoader";
+import { InstallationSection } from "./components/sections";
 
 export default function App() {
   const [activeLoader, setActiveLoader] = useState<string>("spin");
@@ -57,13 +58,12 @@ export default function App() {
     { name: "element", component: ElementLoader, title: "element Loader" },
   ];
 
-  const activeLoaderData =
-    loaders.find((l) => l.name === activeLoader) || loaders[0];
-
   return (
     <div className="min-h-screen w-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-950">
       {/* Hero Section */}
-      <HeroSection activeLoaderData={activeLoaderData} />
+      <HeroSection />
+
+      <InstallationSection />
 
       {/* Features Section */}
       <FeaturesSection />
