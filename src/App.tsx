@@ -6,6 +6,7 @@ import { PerformanceBestPracticesSection } from "@/components/sections/Performan
 import { WhyUseLibrarySection } from "@/components/sections/WhyUseLibrarySection";
 import { FooterSection } from "@/components/sections/FooterSection";
 import { InstallationSection } from "./components/sections";
+import { AutoSkeletonLoaderExamples } from "./components/sections/AutoSkeletonLoaderExamples";
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
       <HeroSection />
       <InstallationSection />
       <FeaturesSection />
+      <AutoSkeletonLoaderExamples />
 
       {/* Loaders Showcase Section */}
       <LoadersShowcaseSection />
