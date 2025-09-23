@@ -109,7 +109,10 @@ export function LoadersShowcaseSection() {
   }, []);
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white">
+    <section
+      id="loaders"
+      className="py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white"
+    >
       <div className="container mx-auto px-4">
         {/* Enhanced Header */}
         <div className="text-center mb-16">

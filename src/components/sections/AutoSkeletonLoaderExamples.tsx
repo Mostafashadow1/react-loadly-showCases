@@ -260,19 +260,18 @@ export const AutoSkeletonLoaderExamples = () => {
             ⚡ AutoSkeletonLoader
           </h1>
           <p className="text-gray-400 max-w-3xl mx-auto mt-3">
-            Generate skeleton loaders that{" "}
-            <span className="text-white font-semibold">
-              perfectly match your UI
-            </span>
-            . Zero config, instant performance boost, and modern UX.
+            Stop <span className="text-white font-semibold">wasting time</span>{" "}
+            writing skeletons manually. AutoSkeletonLoader builds them for you —
+            matching your design with zero effort.
           </p>
           <div className="max-w-2xl mx-auto mt-4 text-gray-400 text-sm">
             <p>
-              The <span className="text-white font-medium">inheritStyles</span>{" "}
-              feature automatically clones your component's styles for the
-              skeleton, while the{" "}
-              <span className="text-white font-medium">styles</span> object
-              allows fine-grained customization of skeleton elements.
+              Just drop your component and get a{" "}
+              <span className="text-white font-medium">
+                ready-to-use skeleton
+              </span>{" "}
+              instantly. No extra setup, no repeated code, only clean and modern
+              UX.
             </p>
           </div>
         </motion.div>
@@ -349,8 +348,7 @@ export const AutoSkeletonLoaderExamples = () => {
                       <AutoSkeletonLoader
                         inheritStyles
                         loading={loadingStates.profile}
-                        color="#e2e8f0"
-                        highlightColor="hsl(340 70% 65%)"
+                        highlightColor="#fdcbdc"
                         waveWidthValue="200px"
                         waveDirection="left-to-right"
                         component={<ProfileCard user={sampleData.profile} />}
@@ -397,7 +395,7 @@ export const AutoSkeletonLoaderExamples = () => {
                         inheritStyles
                         loading={loadingStates.product}
                         shimmerColor="rgba(255,255,255,0.03)"
-                        highlightColor="rgba(255,255,255,0.06)"
+                        highlightColor="#97a3fa"
                         component={<ProductCard product={sampleData.product} />}
                       />
                       <div className="mt-4 text-sm text-gray-400">
@@ -442,7 +440,8 @@ export const AutoSkeletonLoaderExamples = () => {
                         inheritStyles
                         loading={loadingStates.article}
                         shimmerColor="rgba(255,255,255,0.03)"
-                        highlightColor="rgba(255,255,255,0.06)"
+                        highlightColor="#000"
+                        waveDirection="left-to-right"
                         component={<ArticleCard article={sampleData.article} />}
                       />
                       <div className="mt-4 text-sm text-gray-400">

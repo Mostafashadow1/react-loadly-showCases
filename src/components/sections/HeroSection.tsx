@@ -83,7 +83,7 @@ export function HeroSection() {
                   ?.scrollIntoView({ behavior: "smooth" })
               }
               size="lg"
-              className={`${buttonBase} bg-gradient-to-r from-pink-300 to-pink-400 text-black`}
+              className={`${buttonBase} bg-gradient-to-r from-pink-300 to-pink-400 text-black cursor-pointer`}
             >
               <Play className="mr-2 h-5 w-5" />
               Explore Loaders
@@ -96,7 +96,7 @@ export function HeroSection() {
                 )
               }
               size="lg"
-              className={`${buttonBase} bg-gradient-to-r from-gray-900 to-gray-700 text-white`}
+              className={`${buttonBase} bg-gradient-to-r from-gray-900 to-gray-700 text-white cursor-pointer`}
             >
               <Github className="mr-2 h-5 w-5" />
               Star on GitHub
