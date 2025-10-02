@@ -74,9 +74,6 @@ importers:
       react-dom:
         specifier: ^19.1.1
         version: 19.1.1(react@19.1.1)
-      react-loadly:
-        specifier: link:../Library/pnpm/global/5/node_modules/react-loadly
-        version: link:../Library/pnpm/global/5/node_modules/react-loadly
       shiki:
         specifier: ^3.12.2
         version: 3.12.2

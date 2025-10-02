@@ -79,6 +79,24 @@ export function LoadersShowcaseSection() {
 
     // Add unique controls
     activeLoaderData.uniqueProps.forEach((prop) => {
+      // Handle special case for variant property in MorphLoader and SkeletonLoader
+      if (prop === "variant") {
+        if (activeLoaderData.interface === "IMorphLoaderProps") {
+          controls[prop] = UNIQUE_CONTROLS.morphVariant;
+          return;
+        } else if (activeLoaderData.interface === "ISkeletonLoaderProps") {
+          controls[prop] = UNIQUE_CONTROLS.skeletonVariant;
+          return;
+        } else {
+          // Default variant control for other loaders
+          const controlKey = prop as keyof typeof UNIQUE_CONTROLS;
+          if (UNIQUE_CONTROLS[controlKey]) {
+            controls[prop] = UNIQUE_CONTROLS[controlKey];
+          }
+          return;
+        }
+      }
+
       const controlKey = prop as keyof typeof UNIQUE_CONTROLS;
       if (UNIQUE_CONTROLS[controlKey]) {
         controls[prop] = UNIQUE_CONTROLS[controlKey];
@@ -164,13 +182,25 @@ export function LoadersShowcaseSection() {
                   exit={{ opacity: 0 }}
                   transition={{ duration: 0.3 }}
                   className="group cursor-pointer"
-                  onClick={() => setActiveLoader(key as LoaderKind)}
+                  onClick={() => {
+                    setActiveLoader(key as LoaderKind);
+                    // Set morphVariant to "sharp" when MorphLoader is selected
+                    if (key === "morph") {
+                      setPropValues((prev) => ({
+                        ...prev,
+                        morphVariant: "sharp",
+                      }));
+                    }
+                  }}
                 >
                   <Card
                     className="border border-gray-800/70 bg-gray-900/40 backdrop-blur-sm 
                                rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/25 
                                hover:border-indigo-500/30 transition-all duration-500 group-hover:scale-105"
                   >
+                    {loader.isNew && (
+                      <Badge className="text-xs bg-purple-400">NEW</Badge>
+                    )}
                     <CardContent className="p-6 flex flex-col items-center">
                       <div className="flex justify-center mb-4 h-24 items-center">
                         <loader.component
@@ -189,14 +219,26 @@ export function LoadersShowcaseSection() {
                               ? (propValues.loop as boolean)
                               : undefined
                           }
+                          progress={
+                            loader.interface == "IProgressRingLoaderProps"
+                              ? (propValues.progress as number)
+                              : undefined
+                          }
+                          thickness={
+                            loader.interface == "IProgressRingLoaderProps"
+                              ? (propValues.thickness as number)
+                              : undefined
+                          }
                         />
                       </div>
                       <h3 className="font-semibold text-white text-center mb-2">
                         {loader.title}
                       </h3>
-                      <Badge variant="outline" className="text-xs">
-                        {loader.interface}
-                      </Badge>
+                      <div className="flex gap-1">
+                        <Badge variant="outline" className="text-xs">
+                          {loader.interface}
+                        </Badge>
+                      </div>
                     </CardContent>
                   </Card>
                 </motion.div>

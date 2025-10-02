@@ -14,6 +14,10 @@ import {
   ElementLoader,
   BounceLoader,
   SkeletonLoader,
+  SpinDotsLoader,
+  HeatmapLoader,
+  MorphLoader,
+  ProgressRingLoader,
 } from "react-loadly";
 import {
   commonProps,
@@ -138,5 +142,38 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
       "waveWidth",
       "aria-label",
     ],
+  },
+
+  spinDots: {
+    component: SpinDotsLoader,
+    title: "Spin Dots Loader",
+    interface: "ISpinDotsLoaderProps",
+    commonProps: commonProps,
+    uniqueProps: ["dots", "gap"],
+    isNew: true,
+  },
+  heatmap: {
+    component: HeatmapLoader,
+    title: "Heatmap Loader",
+    interface: "IHeatmapLoaderProps",
+    commonProps: commonProps,
+    uniqueProps: ["rows", "cols"],
+    isNew: true,
+  },
+  morph: {
+    component: MorphLoader,
+    title: "Morph Loader",
+    interface: "IMorphLoaderProps",
+    commonProps: commonProps,
+    uniqueProps: ["variant", "speed"],
+    isNew: true,
+  },
+  progressRing: {
+    component: ProgressRingLoader,
+    title: "Progress Ring Loader",
+    interface: "IProgressRingLoaderProps",
+    commonProps: commonProps,
+    uniqueProps: ["progress", "thickness"],
+    isNew: true,
   },
 };

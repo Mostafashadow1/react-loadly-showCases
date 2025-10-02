@@ -6,6 +6,10 @@ import type {
   ILogoLoaderProps,
   ISkeletonLoaderProps,
   ITextLoaderProps,
+  ISpinDotsLoaderProps,
+  IHeatmapLoaderProps,
+  IMorphLoaderProps,
+  IProgressRingLoaderProps,
 } from "react-loadly";
 
 export type LoaderPropsMap = {
@@ -24,6 +28,10 @@ export type LoaderPropsMap = {
   element: IElementLoaderProps;
   bounce: IGeometricLoaderProps;
   skeleton: ISkeletonLoaderProps;
+  spinDots: ISpinDotsLoaderProps;
+  heatmap: IHeatmapLoaderProps;
+  morph: IMorphLoaderProps;
+  progressRing: IProgressRingLoaderProps;
 };
 
 type LoaderInterfaces = {
@@ -34,6 +42,10 @@ type LoaderInterfaces = {
   ILogoLoaderProps: ILogoLoaderProps;
   ISkeletonLoaderProps: ISkeletonLoaderProps;
   ITextLoaderProps: ITextLoaderProps;
+  ISpinDotsLoaderProps: ISpinDotsLoaderProps;
+  IHeatmapLoaderProps: IHeatmapLoaderProps;
+  IMorphLoaderProps: IMorphLoaderProps;
+  IProgressRingLoaderProps: IProgressRingLoaderProps;
 };
 
 type LoaderInterfaceName = keyof LoaderInterfaces;
@@ -47,6 +59,7 @@ export interface ILoaderConfig<K extends LoaderKind> {
   interface: LoaderInterfaceName;
   commonProps: (keyof IBaseLoaderProps)[];
   uniqueProps: (keyof LoaderPropsMap[K])[]; // More flexible type
+  isNew?: boolean;
 }
 
 export const commonProps: (keyof IBaseLoaderProps)[] = [

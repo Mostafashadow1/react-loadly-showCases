@@ -11,7 +11,6 @@ export const COMMON_CONTROLS = {
   "aria-label": { type: "text", placeholder: "Loading..." },
 } as const;
 
-// Unique controls configuration for specific loader types
 export const UNIQUE_CONTROLS = {
   count: { type: "slider", min: 1, max: 10, step: 1 },
   amplitude: { type: "slider", min: 0.5, max: 3, step: 0.1 },
@@ -49,6 +48,20 @@ export const UNIQUE_CONTROLS = {
   loop: { type: "switch", label: "Loop Animation" },
   glowIntensity: { type: "slider", min: 0, max: 1, step: 0.1 },
   children: { type: "text", placeholder: "Loading..." },
+  dots: { type: "slider", min: 1, max: 20, step: 1 },
+  gap: { type: "slider", min: 1, max: 20, step: 1, unit: "px" },
+  rows: { type: "slider", min: 1, max: 20, step: 1 },
+  cols: { type: "slider", min: 1, max: 20, step: 1 },
+  thickness: { type: "slider", min: 1, max: 20, step: 1, unit: "px" },
+  progress: { type: "slider", min: 0, max: 100, step: 1, unit: "%" },
+  skeletonVariant: {
+    type: "select",
+    options: ["line", "card", "avatar", "text", "wave", "custom"] as string[],
+  },
+  morphVariant: {
+    type: "select",
+    options: ["sharp", "soft", "blob"] as string[],
+  },
 } as const;
 
 export const DEFAULT_PROPS: Record<string, string | number | boolean> = {
@@ -81,6 +94,13 @@ export const DEFAULT_PROPS: Record<string, string | number | boolean> = {
   loop: true,
   glowIntensity: 0.5,
   children: "Loading...",
+  dots: 8,
+  gap: 4,
+  rows: 5,
+  cols: 5,
+  thickness: 8,
+  progress: 50,
+  morphVariant: "sharp",
 };
 
 // Type definitions for better TypeScript support
