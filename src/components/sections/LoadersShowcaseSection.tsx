@@ -23,7 +23,10 @@ import {
 import type { LoaderKind } from "@/types/ILoaderConfig";
 import type { PropControls } from "@/utils/loaderPropsConfig";
 
-type PropValues = Record<string, string | number | boolean | ReactNode | undefined>;
+type PropValues = Record<
+  string,
+  string | number | boolean | ReactNode | undefined
+>;
 
 export function LoadersShowcaseSection() {
   const [activeLoader, setActiveLoader] = useState<LoaderKind>("spin");
@@ -71,6 +74,7 @@ export function LoadersShowcaseSection() {
 
     // Add common controls
     activeLoaderData.commonProps.forEach((prop) => {
+      console.log(prop);
       const controlKey = prop as keyof typeof COMMON_CONTROLS;
       if (COMMON_CONTROLS[controlKey]) {
         controls[prop] = COMMON_CONTROLS[controlKey];
@@ -200,7 +204,9 @@ export function LoadersShowcaseSection() {
                                hover:border-indigo-500/30 transition-all duration-500 group-hover:scale-105"
                     >
                       {loader.isNew && (
-                        <Badge className="text-xs border-amber-50 p-1">NEW</Badge>
+                        <Badge className="text-xs border-amber-50 p-1">
+                          NEW
+                        </Badge>
                       )}
                       <CardContent className="p-6 flex flex-col items-center">
                         <div className="flex justify-center mb-4 h-24 items-center">
@@ -215,6 +221,7 @@ export function LoadersShowcaseSection() {
                             size={40}
                             color={propValues.color as string}
                             speed={1}
+                            showText={propValues.showText as boolean}
                             loop={
                               loader.interface == "ITextLoaderProps"
                                 ? (propValues.loop as boolean)
@@ -251,7 +258,6 @@ export function LoadersShowcaseSection() {
                            bg-gradient-to-br from-gray-900 to-gray-950 
                            border border-gray-800 rounded-2xl shadow-2xl text-white p-3 "
                 >
-
                   <DialogHeader className="p-6 border-b border-gray-800 bg-gradient-to-r from-indigo-500/10 to-purple-500/10">
                     <div className="flex items-center justify-between">
                       <div>
@@ -262,7 +268,8 @@ export function LoadersShowcaseSection() {
                           {loader.interface}
                         </Badge>
                         <Badge variant="secondary">
-                          {loader.commonProps.length + loader.uniqueProps.length}{" "}
+                          {loader.commonProps.length +
+                            loader.uniqueProps.length}{" "}
                           Props
                         </Badge>
                       </div>
