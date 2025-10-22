@@ -165,7 +165,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     title: "Morph Loader",
     interface: "IMorphLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["variant", "speed"],
+    uniqueProps: ["morphVariant", "speed"],
     isNew: true,
   },
   progressRing: {

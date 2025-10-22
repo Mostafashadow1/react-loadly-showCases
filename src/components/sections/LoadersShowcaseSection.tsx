@@ -22,11 +22,17 @@ import {
 } from "@/utils/loaderPropsConfig";
 import type { LoaderKind } from "@/types/ILoaderConfig";
 import type { PropControls } from "@/utils/loaderPropsConfig";
+import LoaderShowcaseHeader from "../organism/LoaderShowcaseHeader";
+import LoaderShowcaseCardContent from "../organism/LoaderShowcaseCardContent";
 
+<<<<<<< HEAD
 type PropValues = Record<
   string,
   string | number | boolean | ReactNode | undefined
 >;
+=======
+export type PropValues = Record<string, string | number | boolean | ReactNode | undefined>;
+>>>>>>> c907a18 (reham refactor code for atomic design and commonPropsupdate)
 
 export function LoadersShowcaseSection() {
   const [activeLoader, setActiveLoader] = useState<LoaderKind>("spin");
@@ -80,7 +86,7 @@ export function LoadersShowcaseSection() {
         controls[prop] = COMMON_CONTROLS[controlKey];
       }
     });
-
+    console.log("control props", controls)
     // Add unique controls
     activeLoaderData.uniqueProps.forEach((prop) => {
       // Handle special case for variant property in MorphLoader and SkeletonLoader
@@ -112,7 +118,7 @@ export function LoadersShowcaseSection() {
 
   // Handle prop value changes
   const handlePropChange = useCallback(
-    (propName: string, value: string | number | boolean) => {
+    (propName: string, value: string | number | boolean | ReactNode) => {
       setPropValues((prev) => ({
         ...prev,
         [propName]: value,
@@ -137,43 +143,8 @@ export function LoadersShowcaseSection() {
     >
       <div className="container mx-auto px-4">
         {/* Enhanced Header */}
-        <div className="text-center mb-16">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent"
-          >
-            React Loadly Collection
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-            className="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto mb-8"
-          >
-            Discover beautiful, customizable loading components for React. Each
-            loader supports dynamic props for ultimate flexibility in your
-            applications.
-          </motion.p>
+        <LoaderShowcaseHeader />
 
-          {/* Common Props Highlight */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
-            className="flex flex-wrap justify-center gap-2 mb-8"
-          >
-            {["size", "speed", "color", "loadingText"].map((prop) => (
-              <Badge key={prop} variant="secondary" className="px-3 py-1">
-                {prop}
-              </Badge>
-            ))}
-            <Badge variant="outline" className="px-3 py-1">
-              + unique props per loader
-            </Badge>
-          </motion.div>
-        </div>
 
         {/* Enhanced Loader Grid */}
         <div className="container mx-auto  px-2 md:px-10">
@@ -189,13 +160,6 @@ export function LoadersShowcaseSection() {
                     className="group cursor-pointer"
                     onClick={() => {
                       setActiveLoader(key as LoaderKind);
-                      // Set morphVariant to "sharp" when MorphLoader is selected
-                      if (key === "morph") {
-                        setPropValues((prev) => ({
-                          ...prev,
-                          morphVariant: "sharp",
-                        }));
-                      }
                     }}
                   >
                     <Card
@@ -208,46 +172,7 @@ export function LoadersShowcaseSection() {
                           NEW
                         </Badge>
                       )}
-                      <CardContent className="p-6 flex flex-col items-center">
-                        <div className="flex justify-center mb-4 h-24 items-center">
-                          <loader.component
-                            src={
-                              loader.interface == "ILogoLoaderProps"
-                                ? (propValues?.src as string)
-                                : ""
-                            }
-                            animationType="spin"
-                            glowIntensity={0.5}
-                            size={40}
-                            color={propValues.color as string}
-                            speed={1}
-                            showText={propValues.showText as boolean}
-                            loop={
-                              loader.interface == "ITextLoaderProps"
-                                ? (propValues.loop as boolean)
-                                : undefined
-                            }
-                            progress={
-                              loader.interface == "IProgressRingLoaderProps"
-                                ? (propValues.progress as number)
-                                : undefined
-                            }
-                            thickness={
-                              loader.interface == "IProgressRingLoaderProps"
-                                ? (propValues.thickness as number)
-                                : undefined
-                            }
-                          />
-                        </div>
-                        <h3 className="font-semibold text-white text-center mb-2">
-                          {loader.title}
-                        </h3>
-                        <div className="flex gap-1">
-                          <Badge variant="outline" className="text-xs">
-                            {loader.interface}
-                          </Badge>
-                        </div>
-                      </CardContent>
+                      <LoaderShowcaseCardContent loader={loader} propValues={propValues} />
                     </Card>
                   </motion.div>
                 </DialogTrigger>

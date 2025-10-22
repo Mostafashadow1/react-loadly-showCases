@@ -11,50 +11,6 @@ interface CodeSnippetProps {
 export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps) {
   const [copied, setCopied] = useState(false);
 
-  //   const generateCodeSnippet = () => {
-  //     const propsString = Object.entries(currentProps)
-  //       .map(([key, value]) => {
-  //         // For string values that are not numbers or special props, use string format
-  //         if (
-  //           typeof value === "string" &&
-  //           !key.includes("size") &&
-  //           !key.includes("count") &&
-  //           !key.includes("width") &&
-  //           !key.includes("height") &&
-  //           !key.includes("borderWidth") &&
-  //           !key.includes("amplitude") &&
-  //           !key.includes("fluidity") &&
-  //           !key.includes("charDelay") &&
-  //           !key.includes("glowIntensity") &&
-  //           !key.includes("waveWidth")
-
-  //         ) {
-  //           return `      ${key}="${value}"`;
-  //         }
-
-  //         // For boolean values, handle specially
-  //         if (typeof value === "boolean") {
-  //           return `      ${key}={${value}}`;
-  //         }
-
-  //         // For all other values, use JSON.stringify
-  //         return `      ${key}={${JSON.stringify(value)}}`;
-  //       })
-  //       .join("\n");
-
-  //     return `import { ${activeLoaderData.title.replace(
-  //       " ",
-  //       ""
-  //     )} } from 'react-loadly';
-
-  // function MyComponent() {
-  //   return (
-  //     <${activeLoaderData.title.replace(" ", "")}
-  // ${propsString}
-  //     />
-  //   );
-  // }`;
-  //   };
 
   const generateCodeSnippet = () => {
     const loaderName = activeLoaderData.title.replace(/\s+/g, "");
@@ -89,22 +45,6 @@ ${propsString}
   );
 }`;
     }
-
-    // ✅ Case 2 — children is TEXT
-    //     if (typeof children === "string") {
-    //       return `import { ${loaderName} } from 'react-loadly';
-
-    // function MyComponent() {
-    //   return (
-    //     <${loaderName}
-    // ${propsString}
-    //     >
-    //       ${children}
-    //     </${loaderName}>
-    //   );
-    // }`;
-    //  }
-
     // ✅ Case 3 — children is JSX (ReactNode)
     const jsxString = activeLoaderData.childrenPreviewString ?? "<p>Loading</p>";
 

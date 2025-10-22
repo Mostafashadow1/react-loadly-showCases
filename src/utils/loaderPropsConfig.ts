@@ -1,5 +1,4 @@
-import { Children, createElement, type ReactNode } from "react";
-import type { IBaseLoaderProps, IElementLoaderProps, ShapeGroupProps } from "react-loadly";
+import { type ReactNode } from "react";
 
 // Common controls configuration for all loaders
 export const COMMON_CONTROLS = {
@@ -99,8 +98,8 @@ export const DEFAULT_PROPS: Record<string, string | number | boolean | ReactNode
   charDelay: 100,
   loop: true,
   glowIntensity: 0.5,
-  // children: createElement("p", null, "loading..."),
-  Children: "loading...",
+  children: `<p>  loading</p>`,
+  // Children: "loading...",
   dots: 8,
   gap: 4,
   rows: 5,
@@ -108,6 +107,7 @@ export const DEFAULT_PROPS: Record<string, string | number | boolean | ReactNode
   thickness: 8,
   progress: 50,
   morphVariant: "sharp",
+  loaderCenter: true
 };
 
 // Type definitions for better TypeScript support
