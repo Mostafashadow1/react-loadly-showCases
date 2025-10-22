@@ -25,14 +25,7 @@ import type { PropControls } from "@/utils/loaderPropsConfig";
 import LoaderShowcaseHeader from "../organism/LoaderShowcaseHeader";
 import LoaderShowcaseCardContent from "../organism/LoaderShowcaseCardContent";
 
-<<<<<<< HEAD
-type PropValues = Record<
-  string,
-  string | number | boolean | ReactNode | undefined
->;
-=======
 export type PropValues = Record<string, string | number | boolean | ReactNode | undefined>;
->>>>>>> c907a18 (reham refactor code for atomic design and commonPropsupdate)
 
 export function LoadersShowcaseSection() {
   const [activeLoader, setActiveLoader] = useState<LoaderKind>("spin");
