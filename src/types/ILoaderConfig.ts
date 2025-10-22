@@ -67,4 +67,5 @@ export const commonProps: (keyof IBaseLoaderProps)[] = [
   "size",
   "speed",
   "loadingText",
+  "showText",
 ];

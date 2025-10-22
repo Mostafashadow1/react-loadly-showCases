@@ -14,10 +14,11 @@ import type {
   PropControlConfig,
 } from "@/utils/loaderPropsConfig";
 import { Checkbox } from "../ui/checkbox";
+import type { ReactNode } from "react";
 
 interface LoaderControlsProps {
   controls: PropControls;
-  values: Record<string, string | number | boolean | undefined>;
+  values: Record<string, string | number | boolean | ReactNode | undefined>;
   onChange: (propName: string, value: string | number | boolean) => void;
 }
 
@@ -142,6 +143,7 @@ export function LoaderControls({
             />
           </div>
         );
+
 
       default:
         return null;
