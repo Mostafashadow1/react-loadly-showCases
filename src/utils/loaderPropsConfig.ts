@@ -1,3 +1,6 @@
+import { Children, createElement, type ReactNode } from "react";
+import type { IBaseLoaderProps, IElementLoaderProps, ShapeGroupProps } from "react-loadly";
+
 // Common controls configuration for all loaders
 export const COMMON_CONTROLS = {
   size: { type: "slider", min: 20, max: 100, step: 1, unit: "px" },
@@ -9,6 +12,9 @@ export const COMMON_CONTROLS = {
   height: { type: "text", placeholder: "Auto" },
   showText: { type: "switch", label: "Show Text" },
   "aria-label": { type: "text", placeholder: "Loading..." },
+  //missing controlls
+  fullscreen: { type: "switch", label: "Fullscreen" },
+  loaderCenter: { type: "switch", label: "Center Loader" },
 } as const;
 
 export const UNIQUE_CONTROLS = {
@@ -47,7 +53,7 @@ export const UNIQUE_CONTROLS = {
   charDelay: { type: "slider", min: 50, max: 500, step: 10, unit: "ms" },
   loop: { type: "switch", label: "Loop Animation" },
   glowIntensity: { type: "slider", min: 0, max: 1, step: 0.1 },
-  children: { type: "text", placeholder: "Loading..." },
+  children: { type: "text", placeholder: "<p>Loading...</p>" },
   dots: { type: "slider", min: 1, max: 20, step: 1 },
   gap: { type: "slider", min: 1, max: 20, step: 1, unit: "px" },
   rows: { type: "slider", min: 1, max: 20, step: 1 },
@@ -64,7 +70,7 @@ export const UNIQUE_CONTROLS = {
   },
 } as const;
 
-export const DEFAULT_PROPS: Record<string, string | number | boolean> = {
+export const DEFAULT_PROPS: Record<string, string | number | boolean | ReactNode> = {
   size: 50,
   speed: 1,
   color: "#ff8080",
@@ -93,7 +99,8 @@ export const DEFAULT_PROPS: Record<string, string | number | boolean> = {
   charDelay: 100,
   loop: true,
   glowIntensity: 0.5,
-  children: "Loading...",
+  // children: createElement("p", null, "loading..."),
+  Children: "loading...",
   dots: 8,
   gap: 4,
   rows: 5,

@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { truncateText } from "@/utils/truncateText";
 import type { LoaderKind, LoaderPropsMap } from "@/types/ILoaderConfig";
@@ -59,6 +59,7 @@ export function LoaderPreview({
   return (
     <div className="flex flex-col items-center justify-center bg-gray-900/50 border-r border-gray-800 p-6 h-full">
       <div className="mb-6">
+
         <ActiveLoaderComponent
           {...(relevantProps as LoaderPropsMap[LoaderKind])}
         />
@@ -70,11 +71,17 @@ export function LoaderPreview({
         <ScrollArea className="h-40 w-full">
           <div className="text-sm text-gray-400 space-y-1">
             {Object.entries(relevantProps).map(([key, value]) => (
-              <div key={key} className="flex justify-between">
-                <span>{key}: </span>
-                <span className="text-indigo-300">
-                  {truncateText(String(value), 20)}
-                </span>
+              <div key={key} className="flex justify-between items-start gap-2">
+                <span>{key}:</span>
+
+                {/* ✅ If children is JSX, render it */}
+                {key === "children" && typeof value !== "string" ? (
+                  <div className="text-indigo-300">{value as ReactNode}</div>
+                ) : (
+                  <span className="text-indigo-300">
+                    {truncateText(String(value), 20)}
+                  </span>
+                )}
               </div>
             ))}
           </div>
