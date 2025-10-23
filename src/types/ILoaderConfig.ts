@@ -63,9 +63,24 @@ export interface ILoaderConfig<K extends LoaderKind> {
 }
 
 export const commonProps: (keyof IBaseLoaderProps)[] = [
-  "color",
+  "className",
+  "style",
   "size",
+  "width",
+  "height",
+  "color",
+  "secondaryColor",
   "speed",
+  "loading",
+  "aria-label",
+  "showText",
   "loadingText",
   "showText",
+  "data-testid",
+  "fullscreen",
+  "screenWidth",
+  "screenHeight",
+  "loaderCenter",
+  "screenBackground"
 ];
+

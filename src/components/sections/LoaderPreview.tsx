@@ -37,7 +37,7 @@ export function LoaderPreview({
     );
 
     // Ensure showText is always true for proper display
-    props.showText = true;
+    //props.showText = true;
 
     // Handle special cases for specific loaders
     if (activeLoaderData.title === "Skeleton Loader") {
