@@ -1,5 +1,5 @@
 import { useState, useMemo, useCallback, type ReactNode } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -24,13 +24,13 @@ import type { LoaderKind } from "@/types/ILoaderConfig";
 import type { PropControls } from "@/utils/loaderPropsConfig";
 import LoaderShowcaseHeader from "../organism/LoaderShowcaseHeader";
 import LoaderShowcaseCardContent from "../organism/LoaderShowcaseCardContent";
+import SwitchTabs from "../organism/SwitchTabs";
 
 export type PropValues = Record<string, string | number | boolean | ReactNode | undefined>;
 
 export function LoadersShowcaseSection() {
   const [activeLoader, setActiveLoader] = useState<LoaderKind>("spin");
   const [isPlaying, setIsPlaying] = useState(true);
-
   const [propValues, setPropValues] = useState<PropValues>(() => {
     const initialValues: PropValues = {};
     Object.keys(DEFAULT_PROPS).forEach((prop) => {
@@ -38,7 +38,7 @@ export function LoadersShowcaseSection() {
     });
     return initialValues;
   });
-
+  // active loader data created when loader chosen
   const activeLoaderData = useMemo(() => {
     return LOADER_CONFIGS[activeLoader] || Object.values(LOADER_CONFIGS)[0];
   }, [activeLoader]);
@@ -141,7 +141,7 @@ export function LoadersShowcaseSection() {
 
         {/* Enhanced Loader Grid */}
         <div className="container mx-auto  px-2 md:px-10">
-          <div className="grid grid-cols-1  md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1  sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-6">
             {Object.entries(LOADER_CONFIGS).map(([key, loader]) => (
               <Dialog key={key}>
                 <DialogTrigger asChild>
@@ -217,20 +217,10 @@ export function LoadersShowcaseSection() {
                       </div>
                     </div>
                   </DialogHeader>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full min-h-0">
-                    {/* Enhanced Preview */}
-                    <div className="md:col-span-1 flex flex-col min-h-0">
-                      <div className="flex-1 overflow-y-auto scrollbar-none">
-                        <LoaderPreview
-                          activeLoaderData={activeLoaderData}
-                          currentProps={currentProps}
-                        />
-                      </div>
-                    </div>
-
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full min-h-0">
                     {/* Enhanced Controls */}
-                    <div className="md:col-span-1 p-6 space-y-6 border-l border-gray-800 flex flex-col min-h-0">
-                      <div className="flex-1 overflow-y-auto scrollbar-none">
+                    <div className="md:col-span-1 p-6 space-y-2 md:border-e border-0 flex flex-col min-h-full">
+                      <div className="flex-1 overflow-y-auto scrollbar-none h-full">
                         <h4 className="font-semibold text-gray-200 mb-4 flex items-center gap-2">
                           <span className="w-2 h-2 bg-red-500 rounded-full"></span>
                           Customize Properties
@@ -242,13 +232,21 @@ export function LoadersShowcaseSection() {
                         />
                       </div>
                     </div>
-
-                    {/* Enhanced Code Snippet */}
-                    <div className="md:col-span-1 p-6 border-l border-gray-800 flex flex-col min-h-0">
+                    <div className="md:col-span-1 p-6 space-y-2  flex flex-col min-h-0 ">
                       <div className="flex-1 overflow-y-auto scrollbar-none">
-                        <CodeSnippet
-                          activeLoaderData={activeLoaderData}
-                          currentProps={currentProps}
+                        <SwitchTabs
+                          preview={
+                            <LoaderPreview
+                              activeLoaderData={activeLoaderData}
+                              currentProps={currentProps}
+                            />
+                          }
+                          code={
+                            <CodeSnippet
+                              activeLoaderData={activeLoaderData}
+                              currentProps={currentProps}
+                            />
+                          }
                         />
                       </div>
                     </div>
@@ -259,6 +257,6 @@ export function LoadersShowcaseSection() {
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }

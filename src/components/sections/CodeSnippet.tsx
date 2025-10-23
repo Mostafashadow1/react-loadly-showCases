@@ -67,7 +67,7 @@ ${propsString}
   };
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full scrollbar-none">
       <div className="flex justify-between items-center mb-4">
         <h4 className="font-semibold text-gray-200 flex items-center gap-2">
           <span className="w-2 h-2 bg-green-500 rounded-full"></span>
