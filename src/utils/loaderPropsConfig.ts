@@ -56,7 +56,7 @@ export const UNIQUE_CONTROLS = {
   // 🔤 Typography
   fontFamily: { type: "text", placeholder: "Arial", group: "Typography" },
   fontWeight: { type: "text", placeholder: "400", group: "Typography" },
-  children: { type: "text", placeholder: "<p>Loading...</p>", group: "Typography" },
+  children: { type: "node", placeholder: `<p>Loading...</p>`, group: "Typography" },
 
   // 🔢 Count / repetition
   count: { type: "slider", min: 1, max: 10, step: 1, group: "Count" },
@@ -127,7 +127,7 @@ export const DEFAULT_PROPS: Record<string, string | number | boolean | ReactNode
 };
 
 // Type definitions for better TypeScript support
-export type ControlType = "slider" | "color" | "text" | "select" | "switch";
+export type ControlType = "slider" | "color" | "text" | "select" | "switch" | "node";
 export type PropControlConfig = {
   type: ControlType;
   min?: number;

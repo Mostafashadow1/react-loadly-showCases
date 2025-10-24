@@ -16,13 +16,16 @@ export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps
     const loaderName = activeLoaderData.title.replace(/\s+/g, "");
 
     // pull children out so we can handle it separately
-    const { children, ...propsWithoutChildren } = currentProps;
+    const { ...propsWithoutChildren } = currentProps;
 
     // build props string
     const propsString = Object.entries(propsWithoutChildren)
       .map(([key, value]) => {
         if (typeof value === "string") {
           return `      ${key}="${value}"`;
+        }
+        if (typeof value === "object") {
+          return `      ${key}={${value}}`;
         }
         if (typeof value === "boolean") {
           return `      ${key}={${value}}`;
@@ -33,20 +36,6 @@ export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps
 
     // CASES:
 
-    // ✅ Case 1 — No children
-    if (!children || children === "") {
-      return `import { ${loaderName} } from 'react-loadly';
-
-function MyComponent() {
-  return (
-    <${loaderName}
-${propsString}
-    />
-  );
-}`;
-    }
-    // ✅ Case 3 — children is JSX (ReactNode)
-    const jsxString = activeLoaderData.childrenPreviewString ?? "<p>Loading</p>";
 
     return `import { ${loaderName} } from 'react-loadly';
 
@@ -54,7 +43,6 @@ function MyComponent() {
   return (
     <${loaderName}
 ${propsString}
-    children={${jsxString}}
     />
   );
 }`;

@@ -11,11 +11,12 @@ import { getGroupedControls } from "@/lib/NormalizeGroups";
 import { Card, CardContent } from "../ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { GROUP_ICON } from "@/types/ILoaderControlsGroup";
+import PropNodeControl from "../molecules/PropNodeControl";
 
 interface LoaderControlsProps {
   controls: PropControls;
   values: Record<string, string | number | boolean | ReactNode | undefined>;
-  onChange: (propName: string, value: string | number | boolean) => void;
+  onChange: (propName: string, value: string | number | boolean | ReactNode) => void;
 }
 
 export function LoaderControls({
@@ -52,6 +53,14 @@ export function LoaderControls({
         return (
           <PropSwitchControl propName={propName} propConfig={propConfig} value={value} onChange={onChange} />
         );
+      case "node":
+        return (
+          <PropNodeControl
+            propName={propName}
+            propConfig={propConfig}
+            value={value as ReactNode}
+            onChange={onChange} />
+        )
       default:
         return null;
     }

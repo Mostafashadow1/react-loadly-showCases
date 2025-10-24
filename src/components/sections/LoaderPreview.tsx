@@ -40,25 +40,25 @@ export function LoaderPreview({
     //props.showText = true;
 
     // Handle special cases for specific loaders
-    if (activeLoaderData.title === "Skeleton Loader") {
-      const skeletonProps = currentProps as Partial<LoaderPropsMap["skeleton"]>;
-      props.shimmer =
-        skeletonProps.shimmer !== undefined ? skeletonProps.shimmer : true;
-      props.lines = skeletonProps.lines || 1;
-      props.variant = skeletonProps.variant || "avatar";
-    }
+    //   if (activeLoaderData.title === "Skeleton Loader") {
+    //     const skeletonProps = currentProps as Partial<LoaderPropsMap["skeleton"]>;
+    //     props.shimmer =
+    //       skeletonProps.shimmer !== undefined ? skeletonProps.shimmer : true;
+    //     props.lines = skeletonProps.lines || 1;
+    //     props.variant = skeletonProps.variant || "avatar";
+    //   }
 
-    if (activeLoaderData.title === "Typing Loader") {
-      const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
-      props.loop = textProps.loop !== undefined ? textProps.loop : true;
-    }
-
+    //   if (activeLoaderData.title === "Typing Loader") {
+    //     const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
+    //     props.loop = textProps.loop !== undefined ? textProps.loop : true;
+    //   }
+    console.log(props, "relevant props");
     return props;
   }, [activeLoaderData, currentProps]);
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-900/50 border-r border-gray-800 p-6 h-full">
-      <div className="mb-6">
+      <div className="mb-6 relative h-full w-full flex items-center justify-center">
 
         <ActiveLoaderComponent
           {...(relevantProps as LoaderPropsMap[LoaderKind])}
@@ -66,10 +66,10 @@ export function LoaderPreview({
       </div>
 
       {/* Props Preview */}
-      <div className="text-center space-y-2 w-full">
+      <div className="text-center space-y-2 w-full scrollbar-none">
         <h4 className="font-semibold text-gray-300">Current Props:</h4>
         <ScrollArea className="h-40 w-full">
-          <div className="text-sm text-gray-400 space-y-1">
+          <div className="text-sm text-gray-200 space-y-1">
             {Object.entries(relevantProps).map(([key, value]) => (
               <div key={key} className="flex justify-between items-start gap-2">
                 <span>{key}:</span>
