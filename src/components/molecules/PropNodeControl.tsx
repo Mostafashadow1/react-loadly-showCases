@@ -33,7 +33,7 @@ export default function PropNodeControl({
       <label className="text-sm text-zinc-300 font-medium">{propName}</label>
 
       <LiveProvider
-        code={initialCode}
+
         scope={combinedScope}
         language="jsx"
         noInline={true}

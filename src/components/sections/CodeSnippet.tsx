@@ -1,4 +1,4 @@
-import { Children, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Copy } from "lucide-react";
@@ -24,11 +24,11 @@ export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps
         if (typeof value === "string") {
           return `      ${key}="${value}"`;
         }
-        if (typeof value === "object") {
-          return `      ${key}={${value}}`;
-        }
-        if (typeof value === "boolean") {
-          return `      ${key}={${value}}`;
+        if (key === "children") {
+          if (typeof value === "string") {
+            return `      children="${value}"`;
+          }
+          return `      children={${value}}`; // JSX or ReactNode
         }
         return `      ${key}={${JSON.stringify(value)}}`;
       })
@@ -70,7 +70,7 @@ ${propsString}
           <Copy className="w-4 h-4" /> {copied ? "Copied!" : "Copy"}
         </Button>
       </div>
-      <ScrollArea className="flex-1 rounded-lg border border-gray-800 bg-gray-900/60 p-4">
+      <ScrollArea className="flex-1 rounded-lg border border-gray-800 bg-gray-900/60 p-4 scrolled-none">
         <pre className="text-sm text-gray-200 font-mono whitespace-pre-wrap">
           <code className="language-tsx">
             {generateCodeSnippet()}

@@ -2,6 +2,7 @@ import { useMemo, type ReactNode } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { truncateText } from "@/utils/truncateText";
 import type { LoaderKind, LoaderPropsMap } from "@/types/ILoaderConfig";
+import { transformJSXToNode } from "@/lib/transformToNode";
 
 interface LoaderPreviewProps {
   activeLoaderData: any;
@@ -36,22 +37,29 @@ export function LoaderPreview({
       }
     );
 
-    // Ensure showText is always true for proper display
-    //props.showText = true;
+    delete props['fullscreen'];
 
     // Handle special cases for specific loaders
-    //   if (activeLoaderData.title === "Skeleton Loader") {
-    //     const skeletonProps = currentProps as Partial<LoaderPropsMap["skeleton"]>;
-    //     props.shimmer =
-    //       skeletonProps.shimmer !== undefined ? skeletonProps.shimmer : true;
-    //     props.lines = skeletonProps.lines || 1;
-    //     props.variant = skeletonProps.variant || "avatar";
-    //   }
+    if (activeLoaderData.title === "Skeleton Loader") {
+      const skeletonProps = currentProps as Partial<LoaderPropsMap["skeleton"]>;
+      props.shimmer =
+        skeletonProps.shimmer !== undefined ? skeletonProps.shimmer : true;
+      props.lines = skeletonProps.lines || 1;
+      props.variant = skeletonProps.variant || "avatar";
+    }
 
-    //   if (activeLoaderData.title === "Typing Loader") {
-    //     const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
-    //     props.loop = textProps.loop !== undefined ? textProps.loop : true;
-    //   }
+    if (activeLoaderData.title === "Typing Loader") {
+      const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
+      props.loop = textProps.loop !== undefined ? textProps.loop : true;
+    }
+    if (activeLoaderData.title === "Element Loader") {
+      const elementProps = currentProps as Partial<LoaderPropsMap["element"]>;
+      if (typeof elementProps.children === "string") {
+        props.children = transformJSXToNode(elementProps.children);
+      } else {
+        props.children = elementProps.children;
+      }
+    }
     console.log(props, "relevant props");
     return props;
   }, [activeLoaderData, currentProps]);

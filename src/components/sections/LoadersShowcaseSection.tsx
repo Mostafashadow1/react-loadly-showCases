@@ -22,8 +22,6 @@ import LoaderShowcaseHeader from "../organism/LoaderShowcaseHeader";
 import LoaderShowcaseCardContent from "../organism/LoaderShowcaseCardContent";
 import SwitchTabs from "../organism/SwitchTabs";
 import { LoaderDialogHeader } from "../organism/LoaderDialogHeader";
-import { transformJSXToNode } from "@/lib/transformToNode";
-
 export type PropValues = Record<string, string | number | boolean | ReactNode | undefined>;
 
 export function LoadersShowcaseSection() {
@@ -40,7 +38,7 @@ export function LoadersShowcaseSection() {
   const activeLoaderData = useMemo(() => {
     return LOADER_CONFIGS[activeLoader] || Object.values(LOADER_CONFIGS)[0];
   }, [activeLoader]);
-
+  //current props to pass to preview and code snippet
   const currentProps = useMemo(() => {
     const props: PropValues = {};
 
@@ -62,7 +60,6 @@ export function LoadersShowcaseSection() {
     if (!isPlaying) {
       props.speed = 0;
     }
-
     return props;
   }, [activeLoaderData, propValues, isPlaying]);
 
@@ -110,18 +107,6 @@ export function LoadersShowcaseSection() {
   const handlePropChange = useCallback(
     (propName: string, value: string | number | boolean | ReactNode) => {
       setPropValues((prev) => {
-        // SPECIAL CASE: children (string JSX -> ReactNode)
-        if (propName === "children" && typeof value === "string") {
-          try {
-            // Evaluate JSX string into a real ReactNode
-            const node = transformJSXToNode(value); // <-- we'll define this below
-            return { ...prev, [propName]: node };
-          } catch {
-            return { ...prev, [propName]: value }; // fallback
-          }
-        }
-
-        // DEFAULT CASE (other props)
         return {
           ...prev,
           [propName]: value,

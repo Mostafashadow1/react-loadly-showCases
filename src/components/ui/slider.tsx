@@ -19,7 +19,7 @@ const Slider = React.forwardRef<
       <SliderPrimitive.Range className="absolute h-full bg-indigo-800  cursor-pointer" />
     </SliderPrimitive.Track>
     <SliderPrimitive.Thumb className="
-    block h-4 w-4 rounded-full bg-indigo-500
+    block h-4 w-4 rounded-full bg-indigo-50
     cursor-pointer
     shadow 
     transition-all duration-300 ease-in-out
@@ -28,7 +28,7 @@ const Slider = React.forwardRef<
     data-[state=active]:bg-indigo-600
     data-[state=inactive]:bg-indigo-500
     hover:scale-110
-    active:scale-90
+    active:scale-110
   "/>
   </SliderPrimitive.Root>
 ));

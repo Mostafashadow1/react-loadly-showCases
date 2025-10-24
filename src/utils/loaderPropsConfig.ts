@@ -1,3 +1,4 @@
+import { transformJSXToNode } from "@/lib/transformToNode";
 import { type ReactNode } from "react";
 
 // Common controls configuration for all loaders
@@ -56,7 +57,7 @@ export const UNIQUE_CONTROLS = {
   // 🔤 Typography
   fontFamily: { type: "text", placeholder: "Arial", group: "Typography" },
   fontWeight: { type: "text", placeholder: "400", group: "Typography" },
-  children: { type: "node", placeholder: `<p>Loading...</p>`, group: "Typography" },
+  children: { type: "node", placeholder: '<p>Loading...</p>', group: "Typography" },
 
   // 🔢 Count / repetition
   count: { type: "slider", min: 1, max: 10, step: 1, group: "Count" },
@@ -114,8 +115,7 @@ export const DEFAULT_PROPS: Record<string, string | number | boolean | ReactNode
   charDelay: 100,
   loop: true,
   glowIntensity: 0.5,
-  children: `<p>  loading</p>`,
-  // Children: "loading...",
+  children: transformJSXToNode('<p>Loading...</p>'),
   dots: 8,
   gap: 4,
   rows: 5,
