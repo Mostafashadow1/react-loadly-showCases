@@ -67,7 +67,7 @@ export function LoaderControls({
   };
   if (grouped.length === 0) return null;
   return (
-    <Card className="h-full overflow-hidden border-0">
+    <Card className="h-full overflow-auto scrollbar-none border-0">
       <CardContent className="p-3">
         <Tabs defaultValue={grouped[0][0]}>
           <TabsList className="mb-4 overflow-auto">

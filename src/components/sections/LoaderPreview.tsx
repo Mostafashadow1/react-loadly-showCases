@@ -74,12 +74,12 @@ export function LoaderPreview({
       </div>
 
       {/* Props Preview */}
-      <div className="text-center space-y-2 w-full scrollbar-none">
+      <div className="text-center space-y-2 w-full scrollbar-none ">
         <h4 className="font-semibold text-gray-300">Current Props:</h4>
-        <ScrollArea className="h-40 w-full">
+        <ScrollArea className="h-40 w-full  scrollbar-none">
           <div className="text-sm text-gray-200 space-y-1">
             {Object.entries(relevantProps).map(([key, value]) => (
-              <div key={key} className="flex justify-between items-start gap-2">
+              <div key={key} className="flex justify-between items-start gap-2 ">
                 <span>{key}:</span>
 
                 {/* ✅ If children is JSX, render it */}
