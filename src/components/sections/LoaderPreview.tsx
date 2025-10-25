@@ -55,7 +55,12 @@ export function LoaderPreview({
     if (activeLoaderData.title === "Element Loader") {
       const elementProps = currentProps as Partial<LoaderPropsMap["element"]>;
       if (typeof elementProps.children === "string") {
-        props.children = transformJSXToNode(elementProps.children);
+        try {
+          props.children = transformJSXToNode(elementProps.children);
+
+        } catch (err) {
+          props.children = elementProps.children;
+        }
       } else {
         props.children = elementProps.children;
       }
@@ -63,6 +68,55 @@ export function LoaderPreview({
     console.log(props, "relevant props");
     return props;
   }, [activeLoaderData, currentProps]);
+
+  const propsDisplay = useMemo(() => {
+    const props: Record<string, unknown> = {};
+
+    // Add common props
+    activeLoaderData.commonProps.forEach(
+      (prop: keyof LoaderPropsMap[LoaderKind]) => {
+        if (currentProps[prop] !== undefined) {
+          props[prop] = currentProps[prop];
+        }
+      }
+    );
+
+    // Add unique props
+    activeLoaderData.uniqueProps.forEach(
+      (prop: keyof LoaderPropsMap[LoaderKind]) => {
+        if (currentProps[prop] !== undefined) {
+          props[prop] = currentProps[prop];
+        }
+      }
+    );
+
+    // delete props['fullscreen'];
+
+    // Handle special cases for specific loaders
+    if (activeLoaderData.title === "Skeleton Loader") {
+      const skeletonProps = currentProps as Partial<LoaderPropsMap["skeleton"]>;
+      props.shimmer =
+        skeletonProps.shimmer !== undefined ? skeletonProps.shimmer : true;
+      props.lines = skeletonProps.lines || 1;
+      props.variant = skeletonProps.variant || "avatar";
+    }
+
+    // if (activeLoaderData.title === "Typing Loader") {
+    //   const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
+    //   props.loop = textProps.loop !== undefined ? textProps.loop : true;
+    // }
+    // if (activeLoaderData.title === "Element Loader") {
+    //   const elementProps = currentProps as Partial<LoaderPropsMap["element"]>;
+    //   if (typeof elementProps.children === "string") {
+    //     props.children = transformJSXToNode(elementProps.children);
+    //   } else {
+    //     props.children = elementProps.children;
+    //   }
+    // }
+    console.log(props, "relevant props");
+    return props;
+  }, [activeLoaderData, currentProps]);
+
 
   return (
     <div className="flex flex-col items-center justify-center bg-gray-900/50 border-r border-gray-800 p-6 h-full">
@@ -74,11 +128,11 @@ export function LoaderPreview({
       </div>
 
       {/* Props Preview */}
-      <div className="text-center space-y-2 w-full scrollbar-none ">
+      <div className="text-center space-y-2 w-full scrollbar-none">
         <h4 className="font-semibold text-gray-300">Current Props:</h4>
         <ScrollArea className="h-40 w-full  scrollbar-none">
           <div className="text-sm text-gray-200 space-y-1">
-            {Object.entries(relevantProps).map(([key, value]) => (
+            {Object.entries(propsDisplay).map(([key, value]) => (
               <div key={key} className="flex justify-between items-start gap-2 ">
                 <span>{key}:</span>
 

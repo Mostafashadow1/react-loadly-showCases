@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Copy } from "lucide-react";
+import { transformJSXToNode } from "@/lib/transformToNode";
 
 interface CodeSnippetProps {
   activeLoaderData: any;
@@ -16,8 +17,7 @@ export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps
     const loaderName = activeLoaderData.title.replace(/\s+/g, "");
 
     // pull children out so we can handle it separately
-    const { ...propsWithoutChildren } = currentProps;
-
+    const { children, ...propsWithoutChildren } = currentProps;
     // build props string
     const propsString = Object.entries(propsWithoutChildren)
       .map(([key, value]) => {
@@ -43,6 +43,7 @@ function MyComponent() {
   return (
     <${loaderName}
 ${propsString}
+children={${children}}
     />
   );
 }`;

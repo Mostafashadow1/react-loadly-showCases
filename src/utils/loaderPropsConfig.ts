@@ -116,6 +116,7 @@ export const DEFAULT_PROPS: Record<string, string | number | boolean | ReactNode
   loop: true,
   glowIntensity: 0.5,
   children: transformJSXToNode('<p>Loading...</p>'),
+  // children: '<p>...loader</p>',
   dots: 8,
   gap: 4,
   rows: 5,

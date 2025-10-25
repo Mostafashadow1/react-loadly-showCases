@@ -133,8 +133,6 @@ export function LoadersShowcaseSection() {
       <div className="container mx-auto px-4">
         {/* Enhanced Header */}
         <LoaderShowcaseHeader />
-
-
         {/* Enhanced Loader Grid */}
         <div className="container mx-auto  px-2 md:px-10">
           <div className="grid grid-cols-1  sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -168,7 +166,7 @@ export function LoadersShowcaseSection() {
 
                 {/* Enhanced Dialog */}
                 <DialogContent
-                  className="max-w-7xl w-[95vw] h-[80vh] overflow-hidden
+                  className="max-w-7xl h-full w-[95vw] sm:h-[80vh] overflow-hidden
                            bg-gradient-to-br from-gray-900 to-gray-950 
                            border border-gray-800 rounded-2xl shadow-2xl text-white p-3 "
                 >
