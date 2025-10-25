@@ -12,6 +12,7 @@ import { Card, CardContent } from "../ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { GROUP_ICON } from "@/types/ILoaderControlsGroup";
 import PropNodeControl from "../molecules/PropNodeControl";
+import PropSelectControl from "../molecules/PropSelectControl";
 
 interface LoaderControlsProps {
   controls: PropControls;
@@ -25,6 +26,7 @@ export function LoaderControls({
   onChange,
 }: LoaderControlsProps) {
   // Build only groups that exist and in order
+  console.log('LoaderControls controls:', controls);
   const grouped = getGroupedControls(controls);
   const renderPropControl = (
     propName: string,
@@ -47,7 +49,7 @@ export function LoaderControls({
         );
       case "select":
         return (
-          <PropTextControl propName={propName} propConfig={propConfig} value={value} onChange={onChange} />
+          <PropSelectControl propName={propName} propConfig={propConfig} value={value} onChange={onChange} />
         );
       case "switch":
         return (

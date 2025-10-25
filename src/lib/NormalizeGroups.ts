@@ -41,6 +41,6 @@ export function getGroupedControls(controls: Record<string, PropControlConfig>) 
 
     // Return in desired order (only present groups)
     const ordered: [GroupKey, [string, PropControlConfig][]][] = GROUP_ORDER.filter(g => filtered[g]).map(g => [g, filtered[g]]);
-
+    console.log('getGroupedControls ordered:', ordered);
     return ordered; // returns array of [groupName, entries[]] in order
 }
