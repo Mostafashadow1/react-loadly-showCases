@@ -101,19 +101,10 @@ export function LoaderPreview({
       props.variant = skeletonProps.variant || "avatar";
     }
 
-    // if (activeLoaderData.title === "Typing Loader") {
-    //   const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
-    //   props.loop = textProps.loop !== undefined ? textProps.loop : true;
-    // }
-    // if (activeLoaderData.title === "Element Loader") {
-    //   const elementProps = currentProps as Partial<LoaderPropsMap["element"]>;
-    //   if (typeof elementProps.children === "string") {
-    //     props.children = transformJSXToNode(elementProps.children);
-    //   } else {
-    //     props.children = elementProps.children;
-    //   }
-    // }
-    console.log(props, "relevant props");
+    if (activeLoaderData.title === "Typing Loader") {
+      const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
+      props.loop = textProps.loop !== undefined ? textProps.loop : true;
+    }
     return props;
   }, [activeLoaderData, currentProps]);
 

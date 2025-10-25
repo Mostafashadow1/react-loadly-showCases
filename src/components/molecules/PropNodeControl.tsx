@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from "react-live";
+import { LiveProvider, LiveEditor } from "react-live";
 import type { PropControlConfig } from "@/utils/loaderPropsConfig";
 
 interface PropNodeControlProps {
