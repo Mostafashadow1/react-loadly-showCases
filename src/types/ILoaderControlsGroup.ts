@@ -1,4 +1,4 @@
-import { Sliders, Droplet, Type, Play, Layout, Cuboid, Image as ImageIcon, BarChart2 } from "lucide-react";
+import { Sliders, Droplet, Type, Play, Layout, Cuboid, Image as ImageIcon, BarChart2, Star } from "lucide-react";
 
 export type GroupKey =
     | "General"
@@ -8,7 +8,8 @@ export type GroupKey =
     | "Layout"
     | "Variant"
     | "Image"
-    | "Progress";
+    | "Progress"
+    | "Specific";
 
 export const GROUP_ORDER: GroupKey[] = [
     "General",
@@ -19,6 +20,7 @@ export const GROUP_ORDER: GroupKey[] = [
     "Variant",
     "Image",
     "Progress",
+    "Specific"
 ];
 export const GROUP_ICON: Record<GroupKey, any> = {
     General: Sliders,
@@ -29,4 +31,5 @@ export const GROUP_ICON: Record<GroupKey, any> = {
     Variant: Cuboid,
     Image: ImageIcon,
     Progress: BarChart2,
+    Specific: Star
 };
