@@ -7,7 +7,7 @@ import PropSliderControl from "../molecules/PropSliderControl";
 import PropColorControl from "../molecules/PropColorControl";
 import PropTextControl from "../molecules/PropTextControl";
 import PropSwitchControl from "../molecules/PropSwitchControl";
-import { getGroupedControls } from "@/lib/NormalizeGroups";
+import { getGroupsForTabs } from "@/lib/NormalizeGroups";
 import { Card, CardContent } from "../ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { GROUP_ICON } from "@/types/ILoaderControlsGroup";
@@ -27,7 +27,8 @@ export function LoaderControls({
 }: LoaderControlsProps) {
   // Build only groups that exist and in order
   console.log('LoaderControls controls:', controls);
-  const grouped = getGroupedControls(controls);
+  const grouped = getGroupsForTabs(controls);
+
   const renderPropControl = (
     propName: string,
     propConfig: PropControlConfig
@@ -74,7 +75,7 @@ export function LoaderControls({
         <Tabs defaultValue={grouped[0][0]}>
           <TabsList className="mb-4 overflow-auto">
             {grouped.map(([groupName]) => {
-              const Icon = GROUP_ICON[groupName];
+              const Icon = GROUP_ICON[groupName as keyof typeof GROUP_ICON];
               return (
                 <TabsTrigger key={groupName} value={groupName}
                   className="
