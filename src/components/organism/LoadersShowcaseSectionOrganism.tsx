@@ -8,9 +8,9 @@ import {
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { LOADER_CONFIGS } from "@/utils/LoaderConfig";
-import { LoaderPreview } from "@/components/sections/LoaderPreview";
-import { LoaderControls } from "@/components/sections/LoaderControls";
-import { CodeSnippet } from "@/components/sections/CodeSnippet";
+import { LoaderPreview } from "@/components/organism/LoaderPreviewOrganism";
+import { LoaderControls } from "@/components/organism/LoaderControlsOrganism";
+import { CodeSnippet } from "@/components/organism/CodeSnippetOrganism";
 import {
   COMMON_CONTROLS,
   UNIQUE_CONTROLS,
@@ -18,10 +18,10 @@ import {
 } from "@/utils/loaderPropsConfig";
 import type { LoaderKind } from "@/types/ILoaderConfig";
 import type { PropControls } from "@/utils/loaderPropsConfig";
-import LoaderShowcaseHeader from "../organism/LoaderShowcaseHeader";
-import LoaderShowcaseCardContent from "../organism/LoaderShowcaseCardContent";
-import SwitchTabs from "../organism/SwitchTabs";
-import { LoaderDialogHeader } from "../organism/LoaderDialogHeader";
+import LoaderShowcaseHeader from "./LoaderShowcaseHeaderOrganism";
+import LoaderShowcaseCardContent from "./LoaderShowcaseCardContentOrganism";
+import SwitchTabs from "./SwitchTabsOrganism";
+import { LoaderDialogHeader } from "./LoaderDialogHeaderOrganism";
 export type PropValues = Record<string, string | number | boolean | ReactNode | undefined>;
 
 export function LoadersShowcaseSection() {
@@ -38,10 +38,10 @@ export function LoadersShowcaseSection() {
   const activeLoaderData = useMemo(() => {
     return LOADER_CONFIGS[activeLoader] || Object.values(LOADER_CONFIGS)[0];
   }, [activeLoader]);
+
   //current props to pass to preview and code snippet
   const currentProps = useMemo(() => {
     const props: PropValues = {};
-
     // Add common props
     activeLoaderData.commonProps.forEach((prop) => {
       if (propValues[prop] !== undefined) {
@@ -62,7 +62,13 @@ export function LoadersShowcaseSection() {
     }
     return props;
   }, [activeLoaderData, propValues, isPlaying]);
-
+  const initialProps = () => {
+    const initialValues: PropValues = {};
+    Object.keys(DEFAULT_PROPS).forEach((prop) => {
+      initialValues[prop] = DEFAULT_PROPS[prop];
+    });
+    return initialValues;
+  }
   const propControls = useMemo((): PropControls => {
     const controls: PropControls = {};
 
@@ -159,7 +165,8 @@ export function LoadersShowcaseSection() {
                           NEW
                         </Badge>
                       )}
-                      <LoaderShowcaseCardContent loader={loader} propValues={propValues} />
+                      <LoaderShowcaseCardContent loader={loader} propValues={propValues} activeLoader={activeLoader} />
+
                     </Card>
                   </motion.div>
                 </DialogTrigger>
@@ -195,7 +202,7 @@ export function LoadersShowcaseSection() {
                       </div>
                     </div>
                     <div className="md:col-span-1 p-6 space-y-2  flex flex-col min-h-0 ">
-                      <div className="flex-1 overflow-y-auto scrollbar-none">
+                      <div className="flex-1 overflow-y-auto scrollbar-beauty">
                         <SwitchTabs
                           preview={
                             <LoaderPreview

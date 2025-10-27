@@ -48,7 +48,7 @@ type LoaderInterfaces = {
   IProgressRingLoaderProps: IProgressRingLoaderProps;
 };
 
-type LoaderInterfaceName = keyof LoaderInterfaces;
+export type LoaderInterfaceName = keyof LoaderInterfaces;
 
 export type LoaderKind = keyof LoaderPropsMap;
 

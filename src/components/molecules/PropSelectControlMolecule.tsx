@@ -1,6 +1,6 @@
 import { Label } from '../ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select'
-import type { PropControlsType } from './PropSliderControl'
+import type { PropControlsType } from './PropSliderControlMolecule'
 
 const PropSelectControl = ({ propName, propConfig, value, onChange }: PropControlsType) => {
     return (

@@ -3,16 +3,16 @@ import type {
   PropControlConfig,
 } from "@/utils/loaderPropsConfig";
 import { Fragment, type ReactNode } from "react";
-import PropSliderControl from "../molecules/PropSliderControl";
-import PropColorControl from "../molecules/PropColorControl";
-import PropTextControl from "../molecules/PropTextControl";
-import PropSwitchControl from "../molecules/PropSwitchControl";
+import PropSliderControl from "../molecules/PropSliderControlMolecule";
+import PropColorControl from "../molecules/PropColorControlMolecule";
+import PropTextControl from "../molecules/PropTextControlMolecule";
+import PropSwitchControl from "../molecules/PropSwitchControlMolecule";
 import { getGroupsForTabs } from "@/lib/NormalizeGroups";
 import { Card, CardContent } from "../ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import { GROUP_ICON } from "@/types/ILoaderControlsGroup";
-import PropNodeControl from "../molecules/PropNodeControl";
-import PropSelectControl from "../molecules/PropSelectControl";
+import PropNodeControl from "../molecules/PropNodeControlMolecule";
+import PropSelectControl from "../molecules/PropSelectControlMolecule";
 
 interface LoaderControlsProps {
   controls: PropControls;
@@ -70,7 +70,7 @@ export function LoaderControls({
   };
   if (grouped.length === 0) return null;
   return (
-    <Card className="h-full overflow-auto scrollbar-none border-0">
+    <Card className="h-full overflow-auto scrollbar-beauty border-0">
       <CardContent className="p-3">
         <Tabs defaultValue={grouped[0][0]}>
           <TabsList className="mb-4 overflow-auto">

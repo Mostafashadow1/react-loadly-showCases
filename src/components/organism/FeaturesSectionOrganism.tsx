@@ -80,7 +80,13 @@ export function FeaturesSection() {
             >
               <Card className="relative border border-gray-800/70 bg-gray-900/40 backdrop-blur-md rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 group">
                 <div
-                  className={`absolute inset-0 rounded-2xl border-2 border-transparent bg-gradient-to-r from-${color}-100 to-${color}-500 opacity-0 group-hover:opacity-100 transition-all`}
+                  style={
+                    {
+                      ["--from" as any]: `${color}-100`,
+                      ["--to" as any]: `${color}-500`,
+                    } as React.CSSProperties
+                  }
+                  className={`absolute inset-0 rounded-2xl border-2 border-transparent  bg-gradient-to-r from-${color}-100 to-${color}-500 opacity-0 group-hover:opacity-100 transition-all`}
                 />
                 <CardHeader className="relative pb-3">
                   <div
