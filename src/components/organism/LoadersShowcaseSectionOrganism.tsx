@@ -116,12 +116,12 @@ export function LoadersShowcaseSection() {
       id="loaders"
       className="py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 ">
         {/* Enhanced Header */}
         <LoaderShowcaseHeader />
         {/* Enhanced Loader Grid */}
         <div className="container mx-auto  px-2 md:px-10">
-          <div className="grid grid-cols-1  sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1  sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-hidden">
             {Object.entries(LOADER_CONFIGS).map(([key, loader]) => (
               <Dialog key={key}>
                 <DialogTrigger asChild>
@@ -168,8 +168,8 @@ export function LoadersShowcaseSection() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full min-h-0">
                     {/* Enhanced Controls */}
-                    <div className="md:col-span-1 p-6 space-y-2 md:border-e border-0 flex flex-col min-h-full">
-                      <div className="flex-1 overflow-y-auto scrollbar-none h-full">
+                    <div className="p-4 md:p-6 space-y-4 flex flex-col min-h-0 md:min-h-full md:border-e border-gray-800/50 bg-zinc-900/40 rounded-xl md:rounded-none">
+                      <div className="flex-1 overflow-y-auto scrollbar-beauty h-full">
                         <h4 className="font-semibold text-gray-200  flex items-center gap-2">
                           <span className="w-2 h-2 bg-red-500 rounded-full"></span>
                           Customize Properties
@@ -181,7 +181,7 @@ export function LoadersShowcaseSection() {
                         />
                       </div>
                     </div>
-                    <div className="md:col-span-1 p-6 space-y-2  flex flex-col min-h-0 ">
+                    <div className="p-4 md:p-6 space-y-4 flex flex-col min-h-0 bg-zinc-900/40 rounded-xl md:rounded-none">
                       <div className="flex-1 overflow-y-auto scrollbar-beauty">
                         <SwitchTabs
                           preview={

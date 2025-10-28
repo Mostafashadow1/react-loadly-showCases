@@ -73,7 +73,7 @@ export function LoaderControls({
     <Card className="h-full   border-0">
       <CardContent className="p-3">
         <Tabs defaultValue={grouped[0][0]} >
-          <div className=" mb-2 shrink-0 sticky top-0 z-10 ">
+          <div className=" mb-2 shrink-0 sticky top-0 z-10  bg-zinc-900">
             <TabsList className="rounded-md flex-wrap bg-gray-800 border-gray-200/45 border">
               {grouped.map(([groupName]) => {
                 const Icon = GROUP_ICON[groupName as keyof typeof GROUP_ICON];
