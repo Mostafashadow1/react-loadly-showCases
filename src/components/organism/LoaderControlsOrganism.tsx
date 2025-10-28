@@ -70,28 +70,30 @@ export function LoaderControls({
   };
   if (grouped.length === 0) return null;
   return (
-    <Card className="h-full overflow-auto scrollbar-beauty border-0">
+    <Card className="h-full   border-0">
       <CardContent className="p-3">
-        <Tabs defaultValue={grouped[0][0]}>
-          <TabsList className="mb-4 overflow-auto">
-            {grouped.map(([groupName]) => {
-              const Icon = GROUP_ICON[groupName as keyof typeof GROUP_ICON];
-              return (
-                <TabsTrigger key={groupName} value={groupName}
-                  className="
+        <Tabs defaultValue={grouped[0][0]} >
+          <div className=" mb-2 shrink-0 sticky top-0 z-10 ">
+            <TabsList className="rounded-md flex-wrap bg-gray-800 border-gray-200/45 border">
+              {grouped.map(([groupName]) => {
+                const Icon = GROUP_ICON[groupName as keyof typeof GROUP_ICON];
+                return (
+                  <TabsTrigger key={groupName} value={groupName}
+                    className="
             data-[state=active]:bg-indigo-700 data-[state=active]:text-white
             text-zinc-400 hover:text-white hover:bg-indigo-700/40
             transition-all px-4 py-1 rounded-sm ease-in-out
           "
-                >
-                  <Icon className="w-4 h-4" />
-                  <span className="capitalize text-sm">{groupName}</span>
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
+                  >
+                    <Icon className="w-4 h-4" />
+                    <span className="capitalize text-sm">{groupName}</span>
+                  </TabsTrigger>
+                );
+              })}
+            </TabsList>
+          </div>
           {grouped.map(([groupName, entries]) => (
-            <TabsContent key={groupName} value={groupName} className="space-y-4">
+            <TabsContent key={groupName} value={groupName} className="space-y-4 ">
               {entries.map(([propName, propCfg]) => (
                 <Fragment key={propName}>
                   {renderPropControl(propName, propCfg)}

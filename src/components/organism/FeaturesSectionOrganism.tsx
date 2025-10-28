@@ -40,7 +40,14 @@ const features = [
     color: "green",
   },
 ];
-
+type ColorKey = "indigo" | "purple" | "pink" | "blue" | "green";
+const COLOR_MAP: Record<ColorKey, string> = {
+  indigo: "from-indigo-100/50 to-indigo-500/50",
+  purple: "from-purple-100/50 to-purple-500/50",
+  pink: "from-pink-100/50 to-pink-500/50",
+  blue: "from-blue-100/50 to-blue-500/50",
+  green: "from-green-100/50 to-green-500/50",
+};
 export function FeaturesSection() {
   return (
     <section className="py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white">
@@ -80,13 +87,7 @@ export function FeaturesSection() {
             >
               <Card className="relative border border-gray-800/70 bg-gray-900/40 backdrop-blur-md rounded-2xl overflow-hidden hover:shadow-lg hover:shadow-cyan-500/10 transition-all duration-300 group">
                 <div
-                  style={
-                    {
-                      ["--from" as any]: `${color}-100`,
-                      ["--to" as any]: `${color}-500`,
-                    } as React.CSSProperties
-                  }
-                  className={`absolute inset-0 rounded-2xl border-2 border-transparent  bg-gradient-to-r from-${color}-100 to-${color}-500 opacity-0 group-hover:opacity-100 transition-all`}
+                  className={`absolute inset-0 rounded-2xl border-2 border-transparent  bg-gradient-to-r  ${COLOR_MAP[color as ColorKey]} opacity-0 group-hover:opacity-100 transition-all`}
                 />
                 <CardHeader className="relative pb-3">
                   <div

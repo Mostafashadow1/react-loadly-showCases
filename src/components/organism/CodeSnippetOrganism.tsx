@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Copy } from "lucide-react";
-import { transformJSXToNode } from "@/lib/transformToNode";
 import CodeSnippetEditableMolecule from "../molecules/CodeSnippetEditableMolecule";
 
 interface CodeSnippetProps {

@@ -27,13 +27,26 @@ export type PropValues = Record<string, string | number | boolean | ReactNode | 
 export function LoadersShowcaseSection() {
   const [activeLoader, setActiveLoader] = useState<LoaderKind>("spin");
   const [isPlaying, setIsPlaying] = useState(true);
-  const [propValues, setPropValues] = useState<PropValues>(() => {
-    const initialValues: PropValues = {};
-    Object.keys(DEFAULT_PROPS).forEach((prop) => {
-      initialValues[prop] = DEFAULT_PROPS[prop];
+  //creating props for each loader
+  const [loaderConfigs, setLoaderConfigs] = useState<Record<LoaderKind, PropValues>>(() => {
+    const initial: Record<LoaderKind, PropValues> = {} as any;
+
+    Object.keys(LOADER_CONFIGS).forEach((loaderKey) => {
+      const loader = LOADER_CONFIGS[loaderKey as LoaderKind];
+      const props: PropValues = {};
+
+      // combine default + unique + common props for this loader
+      [...loader.commonProps, ...loader.uniqueProps].forEach((prop) => {
+        if (prop in DEFAULT_PROPS) {
+          props[prop] = DEFAULT_PROPS[prop];
+        }
+      });
+      initial[loaderKey as LoaderKind] = props;
     });
-    return initialValues;
+
+    return initial;
   });
+
   // active loader data created when loader chosen
   const activeLoaderData = useMemo(() => {
     return LOADER_CONFIGS[activeLoader] || Object.values(LOADER_CONFIGS)[0];
@@ -41,70 +54,34 @@ export function LoadersShowcaseSection() {
 
   //current props to pass to preview and code snippet
   const currentProps = useMemo(() => {
-    const props: PropValues = {};
-    // Add common props
-    activeLoaderData.commonProps.forEach((prop) => {
-      if (propValues[prop] !== undefined) {
-        props[prop] = propValues[prop];
-      }
-    });
+    const props = loaderConfigs[activeLoader] || {};
+    return isPlaying ? props : { ...props, speed: 0 };
+  }, [activeLoader, loaderConfigs, isPlaying]);
 
-    // Add unique props
-    activeLoaderData.uniqueProps.forEach((prop) => {
-      if (propValues[prop] !== undefined) {
-        props[prop] = propValues[prop];
-      }
-    });
-
-    // Handle special cases
-    if (!isPlaying) {
-      props.speed = 0;
-    }
-    return props;
-  }, [activeLoaderData, propValues, isPlaying]);
-  const initialProps = () => {
-    const initialValues: PropValues = {};
-    Object.keys(DEFAULT_PROPS).forEach((prop) => {
-      initialValues[prop] = DEFAULT_PROPS[prop];
-    });
-    return initialValues;
-  }
   const propControls = useMemo((): PropControls => {
     const controls: PropControls = {};
+    const { commonProps, uniqueProps, interface: iface } = activeLoaderData;
+    [...commonProps, ...uniqueProps].forEach((prop) => {
+      if (prop in DEFAULT_PROPS) {
+        if (prop === "variant") {
+          controls[prop] =
+            iface === "IMorphLoaderProps"
+              ? UNIQUE_CONTROLS.morphVariant
+              : iface === "ISkeletonLoaderProps"
+                ? UNIQUE_CONTROLS.skeletonVariant
+                : UNIQUE_CONTROLS.variant;
+          return;
+        }
 
-    // Add common controls
-    activeLoaderData.commonProps.forEach((prop) => {
-      const controlKey = prop as keyof typeof COMMON_CONTROLS;
-      if (COMMON_CONTROLS[controlKey]) {
-        controls[prop] = COMMON_CONTROLS[controlKey];
+        controls[prop] =
+          COMMON_CONTROLS[prop as keyof typeof COMMON_CONTROLS] ??
+          UNIQUE_CONTROLS[prop as keyof typeof UNIQUE_CONTROLS];
       }
+
     });
     console.log("control props", controls)
     // Add unique controls
-    activeLoaderData.uniqueProps.forEach((prop) => {
-      // Handle special case for variant property in MorphLoader and SkeletonLoader
-      if (prop === "variant") {
-        if (activeLoaderData.interface === "IMorphLoaderProps") {
-          controls[prop] = UNIQUE_CONTROLS.morphVariant;
-          return;
-        } else if (activeLoaderData.interface === "ISkeletonLoaderProps") {
-          controls[prop] = UNIQUE_CONTROLS.skeletonVariant;
-          return;
-        } else {
-          // Default variant control for other loaders
-          const controlKey = prop as keyof typeof UNIQUE_CONTROLS;
-          if (UNIQUE_CONTROLS[controlKey]) {
-            controls[prop] = UNIQUE_CONTROLS[controlKey];
-          }
-          return;
-        }
-      }
 
-      const controlKey = prop as keyof typeof UNIQUE_CONTROLS;
-      if (UNIQUE_CONTROLS[controlKey]) {
-        controls[prop] = UNIQUE_CONTROLS[controlKey];
-      }
-    });
 
     return controls;
   }, [activeLoaderData]);
@@ -112,23 +89,29 @@ export function LoadersShowcaseSection() {
   // Handle prop value changes
   const handlePropChange = useCallback(
     (propName: string, value: string | number | boolean | ReactNode) => {
-      setPropValues((prev) => {
-        return {
-          ...prev,
+      setLoaderConfigs((prev) => ({
+        ...prev,
+        [activeLoader]: {
+          ...prev[activeLoader],
           [propName]: value,
-        };
-      });
+        },
+      }));
     },
-    []
+    [activeLoader]
   );
 
   // Reset all props to default values
   const resetProps = useCallback(() => {
     const resetValues: PropValues = {};
-    Object.keys(DEFAULT_PROPS).forEach((prop) => {
-      resetValues[prop] = DEFAULT_PROPS[prop];
+    const activeConfig = LOADER_CONFIGS[activeLoader];
+    [...activeConfig.commonProps, ...activeConfig.uniqueProps].forEach((prop) => {
+      if (prop in DEFAULT_PROPS) resetValues[prop] = DEFAULT_PROPS[prop];
     });
-    setPropValues(resetValues);
+
+    setLoaderConfigs((prev) => ({
+      ...prev,
+      [activeLoader]: resetValues,
+    }));
   }, []);
 
   return (
@@ -165,7 +148,7 @@ export function LoadersShowcaseSection() {
                           NEW
                         </Badge>
                       )}
-                      <LoaderShowcaseCardContent loader={loader} propValues={propValues} activeLoader={activeLoader} />
+                      <LoaderShowcaseCardContent loader={loader} propValues={loaderConfigs[key as LoaderKind]} />
 
                     </Card>
                   </motion.div>
@@ -196,7 +179,7 @@ export function LoadersShowcaseSection() {
                         </h4>
                         <LoaderControls
                           controls={propControls}
-                          values={propValues}
+                          values={loaderConfigs[activeLoader]}
                           onChange={handlePropChange}
                         />
                       </div>
