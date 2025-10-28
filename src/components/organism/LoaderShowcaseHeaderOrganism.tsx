@@ -1,4 +1,3 @@
-import React from 'react'
 import PropsHighlight from '../molecules/PropsHighlightMolecule'
 import { motion } from "framer-motion";
 

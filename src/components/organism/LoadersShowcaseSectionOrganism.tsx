@@ -79,10 +79,7 @@ export function LoadersShowcaseSection() {
       }
 
     });
-    console.log("control props", controls)
     // Add unique controls
-
-
     return controls;
   }, [activeLoaderData]);
 
