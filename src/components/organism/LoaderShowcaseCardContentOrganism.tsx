@@ -26,7 +26,7 @@ const LoaderShowcaseCardContent = ({ loader, propValues }: Props) => {
     });
     return (
         <>
-            <CardContent className="p-6 flex flex-col items-center">
+            <CardContent className="p-6 flex flex-col items-center overflow-hidden">
                 <div className="flex justify-center mb-4 h-24 items-center">
 
                     <loader.component

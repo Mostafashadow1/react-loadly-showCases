@@ -34,13 +34,14 @@ export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps
     // CASES1:
 
     if (children) {
+
       return `import { ${loaderName} } from 'react-loadly';
 
 function MyComponent() {
   return (
     <${loaderName}
 ${propsString}
-children ={${children}}
+ children ={${children}}
     />
   );
 }`} else {

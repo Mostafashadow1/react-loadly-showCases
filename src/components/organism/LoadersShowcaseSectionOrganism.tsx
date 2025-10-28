@@ -139,7 +139,7 @@ export function LoadersShowcaseSection() {
                     <Card
                       className=" p-2 border border-gray-800/70 bg-gray-900/40 backdrop-blur-sm 
                                rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/25 
-                               hover:border-indigo-500/30 transition-all duration-500 group-hover:scale-105"
+                               hover:border-indigo-500/30 transition-all duration-500 group-hover:scale-105 "
                     >
                       {loader.isNew && (
                         <Badge className="text-xs border-amber-50 p-1">
