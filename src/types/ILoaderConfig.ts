@@ -10,6 +10,15 @@ import type {
   IHeatmapLoaderProps,
   IMorphLoaderProps,
   IProgressRingLoaderProps,
+  IStairLoaderProps,
+  IOrbitLoaderProps,
+  IPlaneLoaderProps,
+  IRippleLoaderProps,
+  ISnakeLoaderProps,
+  ISquaresLoaderProps,
+  IHashtagLoaderProps,
+  IFallbackLoaderProps,
+  IAutoSkeletonProps,
 } from "react-loadly";
 
 export type LoaderPropsMap = {
@@ -32,6 +41,14 @@ export type LoaderPropsMap = {
   heatmap: IHeatmapLoaderProps;
   morph: IMorphLoaderProps;
   progressRing: IProgressRingLoaderProps;
+  stair: IStairLoaderProps;
+  squares: ISquaresLoaderProps;
+  ripple: IRippleLoaderProps;
+  orbit: IOrbitLoaderProps;
+  plane: IPlaneLoaderProps;
+  hashtag: IHashtagLoaderProps;
+  snake: ISnakeLoaderProps;
+  fallback: IFallbackLoaderProps;
 };
 
 type LoaderInterfaces = {
@@ -46,6 +63,15 @@ type LoaderInterfaces = {
   IHeatmapLoaderProps: IHeatmapLoaderProps;
   IMorphLoaderProps: IMorphLoaderProps;
   IProgressRingLoaderProps: IProgressRingLoaderProps;
+  IStairLoaderProps: IStairLoaderProps;
+  ISquaresLoaderProps: ISquaresLoaderProps;
+  IRippleLoaderProps: IRippleLoaderProps;
+  IOrbitLoaderProps: IOrbitLoaderProps;
+  IPlaneLoaderProps: IPlaneLoaderProps;
+  ISnakeLoaderProps: ISnakeLoaderProps;
+  IHashtagLoaderProps: IHashtagLoaderProps;
+  IFallbackLoaderProps: IFallbackLoaderProps;
+  IAutoSkeletonProps: IAutoSkeletonProps;
 };
 
 export type LoaderInterfaceName = keyof LoaderInterfaces;
@@ -69,7 +95,6 @@ export const commonProps: (keyof IBaseLoaderProps)[] = [
   "width",
   "height",
   "color",
-  "secondaryColor",
   "speed",
   "loading",
   "aria-label",

@@ -3,6 +3,7 @@ import { CardContent } from '../ui/card';
 import { Badge } from '../ui/badge';
 import type { PropValues } from '../sections';
 import type { LoaderPropsMap } from '@/types/ILoaderConfig';
+import { transformJSXToNode } from '@/lib/transformToNode';
 
 type Props = {
     loader: (typeof LOADER_CONFIGS)[keyof typeof LOADER_CONFIGS];
@@ -10,8 +11,19 @@ type Props = {
 
 }
 const LoaderShowcaseCardContent = ({ loader, propValues }: Props) => {
+    const processedProps: Record<string, any> = { ...propValues };
 
+    // ✅ Transform string children into real React nodes
+    Object.entries(processedProps).forEach(([propName, value]) => {
+        if (propName === "children" && typeof value === "string") {
+            try {
+                processedProps[propName] = transformJSXToNode(value);
+            } catch (err) {
+                console.warn(`Failed to transform children:`, err);
+            }
+        }
 
+    });
     return (
         <>
             <CardContent className="p-6 flex flex-col items-center">
@@ -19,7 +31,7 @@ const LoaderShowcaseCardContent = ({ loader, propValues }: Props) => {
 
                     <loader.component
 
-                        {...propValues as LoaderPropsMap[keyof LoaderPropsMap]}
+                        {...processedProps as LoaderPropsMap[keyof LoaderPropsMap]}
 
                     />
 

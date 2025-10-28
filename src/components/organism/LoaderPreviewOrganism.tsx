@@ -52,7 +52,7 @@ export function LoaderPreview({
       const textProps = currentProps as Partial<LoaderPropsMap["typing"]>;
       props.loop = textProps.loop !== undefined ? textProps.loop : true;
     }
-    if (activeLoaderData.title === "Element Loader") {
+    if (activeLoaderData.title === "Element Loader" || activeLoaderData.title === "Fallback Loader") {
       const elementProps = currentProps as Partial<LoaderPropsMap["element"]>;
       if (typeof elementProps.children === "string") {
         try {

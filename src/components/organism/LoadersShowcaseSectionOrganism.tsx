@@ -86,6 +86,7 @@ export function LoadersShowcaseSection() {
   // Handle prop value changes
   const handlePropChange = useCallback(
     (propName: string, value: string | number | boolean | ReactNode) => {
+
       setLoaderConfigs((prev) => ({
         ...prev,
         [activeLoader]: {
@@ -114,7 +115,7 @@ export function LoadersShowcaseSection() {
   return (
     <section
       id="loaders"
-      className="py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white"
+      className="py-20 bg-linear-to-b from-gray-950 via-gray-900 to-gray-950 text-white"
     >
       <div className="container mx-auto px-4 ">
         {/* Enhanced Header */}
@@ -154,7 +155,7 @@ export function LoadersShowcaseSection() {
                 {/* Enhanced Dialog */}
                 <DialogContent
                   className="max-w-7xl h-full w-[95vw] sm:h-[80vh] overflow-hidden
-                           bg-gradient-to-br from-gray-900 to-gray-950 
+                           bg-linear-to-br from-gray-900 to-gray-950 
                            border border-gray-800 rounded-2xl shadow-2xl text-white p-3 "
                 >
                   <LoaderDialogHeader

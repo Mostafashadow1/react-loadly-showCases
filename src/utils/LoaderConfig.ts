@@ -18,6 +18,14 @@ import {
   HeatmapLoader,
   MorphLoader,
   ProgressRingLoader,
+  StairLoader,
+  FallbackLoader,
+  SquaresLoader,
+  RippleLoader,
+  OrbitLoader,
+  PlaneLoader,
+  HashtagLoader,
+  SnakeLoader,
 } from "react-loadly";
 import {
   commonProps,
@@ -45,14 +53,14 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     title: "Wave Loader",
     interface: "IFluidLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["fluidity", "amplitude"],
+    uniqueProps: ["fluidity", "amplitude", "secondaryColor"],
   },
   grid: {
     component: GridLoader,
     title: "Grid Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["count", "borderWidth"],
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
   typing: {
     component: TypingLoader,
@@ -73,21 +81,21 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     title: "Bars Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["count", "borderWidth"],
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
   dots: {
     component: DotsLoader,
     title: "Dots Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["count", "borderWidth"],
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
   blob: {
     component: BlobLoader,
     title: "Blob Loader",
     interface: "IFluidLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["fluidity", "amplitude"],
+    uniqueProps: ["fluidity", "amplitude", "secondaryColor"],
   },
   ring: {
     component: RingLoader,
@@ -101,14 +109,14 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     title: "Flow Loader",
     interface: "IFluidLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["fluidity", "amplitude"],
+    uniqueProps: ["fluidity", "amplitude", "secondaryColor"],
   },
   rotate: {
     component: RotateLoader,
     title: "Rotate Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["count", "borderWidth"],
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
   element: {
     component: ElementLoader,
@@ -122,7 +130,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     title: "Bounce Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["count", "borderWidth"],
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
 
   skeleton: {
@@ -165,7 +173,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     title: "Morph Loader",
     interface: "IMorphLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["morphVariant", "speed"],
+    uniqueProps: ["variant", "speed"],
     isNew: true,
   },
   progressRing: {
@@ -173,7 +181,84 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     title: "Progress Ring Loader",
     interface: "IProgressRingLoaderProps",
     commonProps: commonProps,
-    uniqueProps: ["progress", "thickness"],
+    uniqueProps: ["progress", "thickness", "secondaryColor"],
     isNew: true,
   },
+  stair: {
+    component: StairLoader,
+    title: "Stair Loader",
+    interface: "IStairLoaderProps",
+    commonProps: commonProps,
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
+    isNew: true,
+  },
+  squares: {
+    component: SquaresLoader,
+    title: "Squares Loader",
+    interface: "ISquaresLoaderProps",
+    commonProps,
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
+    isNew: true,
+  },
+
+  ripple: {
+    component: RippleLoader,
+    title: "Ripple Loader",
+    interface: "IRippleLoaderProps",
+    commonProps,
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
+    isNew: true,
+  },
+
+  orbit: {
+    component: OrbitLoader,
+    title: "Orbit Loader",
+    interface: "IOrbitLoaderProps",
+    commonProps,
+    uniqueProps: ["count", "secondaryColor", "borderWidth"],
+    isNew: true,
+  },
+
+  plane: {
+    component: PlaneLoader,
+    title: "Plane Loader",
+    interface: "IPlaneLoaderProps",
+    commonProps,
+    uniqueProps: ["borderWidth", "secondaryColor"],
+    isNew: true,
+  },
+
+  hashtag: {
+    component: HashtagLoader,
+    title: "Hashtag Loader",
+    interface: "IHashtagLoaderProps",
+    commonProps,
+    uniqueProps: ["count", "borderWidth", "secondaryColor"],
+    isNew: true,
+  },
+
+  snake: {
+    component: SnakeLoader,
+    title: "Snake Loader",
+    interface: "ISnakeLoaderProps",
+    commonProps,
+    uniqueProps: ["count", "secondaryColor", "borderWidth"],
+    isNew: true,
+  },
+
+  fallback: {
+    component: FallbackLoader,
+    title: "Fallback Loader",
+    interface: "IFallbackLoaderProps",
+    commonProps,
+    uniqueProps: [
+      "error",
+      "onRetry",
+      "retryLabel",
+      "showRetry",
+      "children",
+      "type",
+    ],
+  },
+
 };

@@ -6,7 +6,7 @@ export const COMMON_CONTROLS = {
   size: { type: "slider", min: 20, max: 100, step: 1, unit: "px", group: "general" },
   speed: { type: "slider", min: 0.1, max: 5, step: 0.1, unit: "x", group: "general" },
   color: { type: "color", label: "Primary Color", group: "general" },
-  secondaryColor: { type: "color", label: "Secondary Color", group: "general" },
+
 
   width: { type: "text", placeholder: "Auto", group: "general" },
   height: { type: "text", placeholder: "Auto", group: "general" },
@@ -27,6 +27,8 @@ export const UNIQUE_CONTROLS = {
   highlightColor: { type: "color", label: "Highlight Color", group: "Specific" },
 
   // 🧩 Behavior
+  showRetry: { type: "switch", label: "Show Retry Button", group: "Specific" },
+
   animationType: {
     type: "select",
     options: ["spin", "pulse", "glow", "bounce", "flip"] as string[],
@@ -36,7 +38,7 @@ export const UNIQUE_CONTROLS = {
   charDelay: { type: "slider", min: 50, max: 500, step: 10, unit: "ms", group: "Specific" },
   progress: { type: "slider", min: 0, max: 100, step: 1, unit: "%", group: "Specific" },
   shimmer: { type: "switch", label: "Shimmer Effect", group: "Specific" },
-
+  secondaryColor: { type: "color", label: "Secondary Color", group: "specific" },
   // 📏 Layout
   spacing: { type: "text", placeholder: "8px", group: "Specific" },
   gap: { type: "slider", min: 1, max: 20, step: 1, unit: "px", group: "Specific" },
@@ -84,47 +86,78 @@ export const UNIQUE_CONTROLS = {
     options: ["sharp", "soft", "blob"] as string[],
     group: "Specific",
   },
+  // 🧾 Fallback / Error Handling
+  error: { type: "text", placeholder: "Something went wrong...", group: "Specific" },
+  retryLabel: { type: "text", placeholder: "Retry", group: "Specific" },
+  onRetry: { type: "action", label: "Retry Action", group: "Specific" },
+  type: {
+    type: "select",
+    options: ["error", "timeout", "network"] as string[],
+    group: "Specific",
+  },
+
 } as const;
 
 export const DEFAULT_PROPS: Record<string, string | number | boolean | ReactNode> = {
+  // Common defaults
   size: 50,
   speed: 1,
   color: "#ff8080",
   secondaryColor: "#e0e7ff",
+  "aria-label": "Loading",
+  loaderCenter: true,
+
+  // Display / content
   loadingText: "Loading...",
   showText: true,
-  "aria-label": "Loading",
+  children: transformJSXToNode('<p>Loading...</p>'),
+
+  // Geometry
   count: 3,
-  amplitude: 1,
   borderWidth: 4,
-  fluidity: 1,
-  src: "https://upload.wikimedia.org/wikipedia/commons/7/75/Flag_of_Palestine.png",
-  alt: "Logo",
-  animationType: "spin",
-  lines: 1,
-  variant: "avatar",
+  borderRadius: "4px",
   spacing: "8px",
+  gap: 4,
+
+  // Animation / waves
+  amplitude: 1,
+  fluidity: 1,
+  waveWidth: "100%",
+  waveDirection: "left-to-right",
+  animationType: "spin",
+  glowIntensity: 0.5,
+  loop: true,
+  charDelay: 100,
+
+  // Skeleton / shimmer
   shimmer: true,
   shimmerColor: "#ffffff",
   highlightColor: "#f0f0f0",
-  borderRadius: "4px",
-  waveWidth: "100%",
-  waveDirection: "left-to-right",
-  fontFamily: "Arial",
-  fontWeight: "400",
-  charDelay: 100,
-  loop: true,
-  glowIntensity: 0.5,
-  children: transformJSXToNode('<p>Loading...</p>'),
-  dots: 8,
-  gap: 4,
+  variant: "avatar",
+  lines: 1,
+
+  // Morph loader
+  morphVariant: "sharp",
+
+  // Grid / heatmap
   rows: 5,
   cols: 5,
-  thickness: 8,
+
+  // Progress ring
   progress: 50,
-  morphVariant: "sharp",
-  loaderCenter: true
+  thickness: 8,
+
+  // Logo loader
+  src: "https://upload.wikimedia.org/wikipedia/commons/7/75/Flag_of_Palestine.png",
+  alt: "Logo",
+
+  // Fallback loader
+  error: "Something went wrong.",
+  retryLabel: "Retry",
+  showRetry: true,
+  type: "error",
 };
+
 
 // Type definitions for better TypeScript support
 export type ControlType = "slider" | "color" | "text" | "select" | "switch" | "node";

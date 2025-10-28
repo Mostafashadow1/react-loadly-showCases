@@ -14,6 +14,7 @@ export function CodeSnippet({ activeLoaderData, currentProps }: CodeSnippetProps
   const [generatedCode, setGeneratedCode] = useState("");
   useEffect(() => {
     setGeneratedCode(generateCodeSnippet());
+    ;
   }, [currentProps, activeLoaderData]);
 
   const generateCodeSnippet = () => {
