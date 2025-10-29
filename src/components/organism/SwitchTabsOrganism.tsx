@@ -12,7 +12,7 @@ export default function SwitchTabs({
     return (
         <Tabs defaultValue="preview" className="w-full flex flex-col h-full scrollbar-none">
 
-            <TabsList className="bg-zinc-800/60 p-1 rounded-md w-fit border border-zinc-700">
+            <TabsList className="bg-zinc-800/60 p-1 rounded-md w-fit border border-zinc-700 ">
                 <TabsTrigger
                     value="preview"
                     className="

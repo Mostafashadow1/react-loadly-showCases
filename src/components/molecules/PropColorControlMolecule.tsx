@@ -1,6 +1,6 @@
 
 import { Label } from '../ui/label'
-import type { PropControlsType } from './PropSliderControl'
+import type { PropControlsType } from './PropSliderControlMolecule'
 import { Input } from '../ui/input'
 const PropColorControl = ({ propName, propConfig, value, onChange }: PropControlsType) => {
     return (

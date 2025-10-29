@@ -1,7 +1,7 @@
 "use client";
 
 import { AutoSkeletonLoader } from "react-loadly";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, easeOut } from "framer-motion";
 import {
   Card,
@@ -14,7 +14,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Users, BookOpen } from "lucide-react";
+import { Users, BookOpen, FileText, UserRound, CheckSquare } from "lucide-react";
+import { PostCard, type Post } from "../molecules/PostCardAutoSkeletonMolecule";
+import { UserProfile, type User } from "../molecules/UserCardAutoskeletonMolecule";
+import { TodoList, type Todo } from "../molecules/TodoCardAutoSkeletonMolecule";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 18 },
@@ -186,8 +189,64 @@ export const AutoSkeletonLoaderExamples = () => {
     profile: true,
     product: true,
     article: true,
+    posts: true,
+    users: true,
+    todos: true,
   });
+  //dynamic data withapi call
+  const [postsData, setPostsData] = useState<Post[] | null>(null);
+  const [usersData, setUsersData] = useState<User[] | null>(null);
+  const [todosData, setTodosData] = useState<Todo[] | null>(null);
+  // Fetch posts from JSONPlaceholder
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
+        const data = await response.json();
+        setPostsData(data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      } finally {
+        setLoadingStates((prev) => ({ ...prev, posts: false }));
+      }
+    };
 
+    fetchPosts();
+  }, []);
+
+  // Fetch users from JSONPlaceholder
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/users?_limit=1");
+        const data = await response.json();
+        setUsersData(data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoadingStates((prev) => ({ ...prev, users: false }));
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // Fetch todos from JSONPlaceholder
+  useEffect(() => {
+    const fetchTodos = async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=5");
+        const data = await response.json();
+        setTodosData(data);
+      } catch (error) {
+        console.error("Error fetching todos:", error);
+      } finally {
+        setLoadingStates((prev) => ({ ...prev, todos: false }));
+      }
+    };
+
+    fetchTodos();
+  }, []);
   const sampleData = {
     profile: {
       name: "Mostafa Mohamed",
@@ -233,6 +292,32 @@ export const AutoSkeletonLoaderExamples = () => {
     setLoadingStates((p) => ({ ...p, [key]: !p[key] }));
   };
 
+  const resetLoading = async (key: keyof typeof loadingStates) => {
+    setLoadingStates((prev) => ({ ...prev, [key]: true }));
+
+    try {
+      if (key === "posts") {
+        const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
+        const data = await response.json();
+        setPostsData(data);
+      } else if (key === "users") {
+        const response = await fetch("https://jsonplaceholder.typicode.com/users?_limit=1");
+        const data = await response.json();
+        setUsersData(data);
+      } else if (key === "todos") {
+        const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=5");
+        const data = await response.json();
+        setTodosData(data);
+      }
+    } catch (error) {
+      console.error(`Error fetching ${key}:`, error);
+    } finally {
+      setTimeout(() => {
+        setLoadingStates((prev) => ({ ...prev, [key]: false }));
+      }, 2000);
+    }
+  };
+
   const usageSnippet = `<AutoSkeletonLoader
   loading={isLoading}
   inheritStyles
@@ -243,7 +328,7 @@ export const AutoSkeletonLoaderExamples = () => {
 />`;
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950 text-white">
+    <section className="py-20 bg-linear-to-b from-gray-950 via-gray-900 to-gray-950 text-white">
       <div className="container mx-auto px-6">
         {/* header */}
         <motion.div
@@ -283,7 +368,7 @@ export const AutoSkeletonLoaderExamples = () => {
             {/* Tabs */}
             <Tabs defaultValue="profile" className="w-full">
               <TabsList
-                className="mx-auto max-w-lg grid grid-cols-3 gap-3 p-2 rounded-xl"
+                className="mx-auto max-w-2xl grid grid-cols-6 gap-3 p-2 rounded-xl"
                 style={{
                   background:
                     "linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01))",
@@ -315,6 +400,32 @@ export const AutoSkeletonLoaderExamples = () => {
                   <span className="inline-flex items-center gap-2">
                     <BookOpen className="h-4 w-4 text-indigo-300" />
                     Article
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="posts"
+                  className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 border border-transparent data-[state=active]:border-white data-[state=active]:bg-white/6 data-[state=active]:text-white transition"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <FileText className="w-4 h-4" />
+                    post
+                  </span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value="users"
+                  className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 border border-transparent data-[state=active]:border-white data-[state=active]:bg-white/6 data-[state=active]:text-white transition"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <UserRound className="w-4 h-4" /> users
+                  </span>
+                </TabsTrigger>
+
+                <TabsTrigger
+                  value="todos"
+                  className="px-4 py-2 rounded-lg text-sm font-semibold text-gray-300 border border-transparent data-[state=active]:border-white data-[state=active]:bg-white/6 data-[state=active]:text-white transition"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <CheckSquare className="w-4 h-4" />TodoList
                   </span>
                 </TabsTrigger>
               </TabsList>
@@ -455,6 +566,149 @@ export const AutoSkeletonLoaderExamples = () => {
                   </CardContent>
                 </Card>
               </TabsContent>
+
+
+              {/* Posts Example */}
+              <TabsContent value="posts" className="mt-8">
+                <Card className="bg-transparent border border-white/10 rounded-2xl p-0">
+                  <CardHeader className="flex items-center justify-between p-6">
+                    <div>
+                      <CardTitle>Posts Example</CardTitle>
+                      <CardDescription className="text-gray-400">
+                        API-driven skeleton loading example
+                      </CardDescription>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => resetLoading("posts")}
+                        style={{
+                          padding: "8px 16px",
+                          backgroundColor: "#3b82f6",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          fontWeight: "500",
+                        }}
+                      >
+                        Reload
+                      </button>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="p-6 flex justify-center">
+                    <div className="w-full max-w-xl">
+                      <AutoSkeletonLoader
+                        loading={loadingStates.posts || !postsData}
+                        component={<PostCard post={postsData?.[0]} />}
+                        inheritStyles
+                        shimmer
+                      />
+
+                      <div className="mt-4 text-sm text-gray-400">
+                        <p className="font-medium">💡 Post data</p>
+                        <p>{postsData ? postsData[0]?.body : "Fetching sample post..."}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Users Example */}
+              <TabsContent value="users" className="mt-8">
+                <Card className="bg-transparent border border-white/10 rounded-2xl p-0">
+                  <CardHeader className="flex items-center justify-between p-6">
+                    <div>
+                      <CardTitle>Users Example</CardTitle>
+                      <CardDescription className="text-gray-400">
+                        API-driven user profile loading example
+                      </CardDescription>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => resetLoading("users")}
+                        style={{
+                          padding: "8px 16px",
+                          backgroundColor: "#3b82f6",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          fontWeight: "500",
+                        }}
+                      >
+                        Reload
+                      </button>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="p-6 flex justify-center">
+                    <div className="w-full max-w-xl">
+                      <AutoSkeletonLoader
+                        loading={loadingStates.users || !usersData}
+                        component={<UserProfile user={usersData?.[0]} />}
+                        inheritStyles
+                        shimmer
+                      />
+
+                      <div className="mt-4 text-sm text-gray-400">
+                        <p className="font-medium">💡 User data</p>
+                        <p>{usersData ? usersData[0]?.email : "Fetching sample user..."}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Todos Example */}
+              <TabsContent value="todos" className="mt-8">
+                <Card className="bg-transparent border border-white/10 rounded-2xl p-0">
+                  <CardHeader className="flex items-center justify-between p-6">
+                    <div>
+                      <CardTitle>Todos Example</CardTitle>
+                      <CardDescription className="text-gray-400">
+                        API-driven todo list loading example
+                      </CardDescription>
+                    </div>
+
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={() => resetLoading("todos")}
+                        style={{
+                          padding: "8px 16px",
+                          backgroundColor: "#3b82f6",
+                          color: "white",
+                          border: "none",
+                          borderRadius: "6px",
+                          cursor: "pointer",
+                          fontWeight: "500",
+                        }}
+                      >
+                        Reload
+                      </button>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="p-6 flex justify-center">
+                    <div className="w-full max-w-xl">
+                      <AutoSkeletonLoader
+                        loading={loadingStates.todos || !todosData}
+                        component={<TodoList todos={todosData || undefined} />}
+                        inheritStyles
+                        shimmer
+                      />
+
+                      <div className="mt-4 text-sm text-gray-400">
+                        <p className="font-medium">💡 Todo data</p>
+                        <p>{todosData ? `${todosData.length} todos loaded` : "Fetching todos..."}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
             </Tabs>
           </div>
 

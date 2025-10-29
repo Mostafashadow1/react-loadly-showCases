@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge"
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { PlaybackControls } from "../molecules/PlaybackControls"
+import { PlaybackControls } from "../molecules/PlaybackControlsMolecule"
 interface LoaderDialogHeaderProps {
     title: string
     interfaceName: string

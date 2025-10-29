@@ -1,5 +1,4 @@
-import React from 'react'
-import PropsHighlight from '../molecules/PropsHighlight'
+import PropsHighlight from '../molecules/PropsHighlightMolecule'
 import { motion } from "framer-motion";
 
 const LoaderShowcaseHeader = () => {

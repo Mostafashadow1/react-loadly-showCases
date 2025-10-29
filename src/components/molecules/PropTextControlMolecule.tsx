@@ -1,4 +1,4 @@
-import type { PropControlsType } from './PropSliderControl'
+import type { PropControlsType } from './PropSliderControlMolecule'
 import { Label } from '../ui/label'
 import { Input } from '../ui/input'
 

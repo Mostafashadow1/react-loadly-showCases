@@ -37,7 +37,7 @@ export function LoaderPreview({
       }
     );
 
-    delete props['fullscreen'];
+    delete props["fullscreen"];
 
     // Handle special cases for specific loaders
     if (activeLoaderData.title === "Skeleton Loader") {
@@ -57,8 +57,7 @@ export function LoaderPreview({
       if (typeof elementProps.children === "string") {
         try {
           props.children = transformJSXToNode(elementProps.children);
-
-        } catch (err) {
+        } catch (_) {
           props.children = elementProps.children;
         }
       } else {
@@ -108,11 +107,9 @@ export function LoaderPreview({
     return props;
   }, [activeLoaderData, currentProps]);
 
-
   return (
     <div className="flex flex-col items-center justify-center bg-gray-900/50 border-r border-gray-800 p-6 h-full">
       <div className="mb-6 relative h-full w-full flex items-center justify-center">
-
         <ActiveLoaderComponent
           {...(relevantProps as LoaderPropsMap[LoaderKind])}
         />
@@ -124,7 +121,10 @@ export function LoaderPreview({
         <ScrollArea className="h-40 w-full  scrollbar-none">
           <div className="text-sm text-gray-200 space-y-1">
             {Object.entries(propsDisplay).map(([key, value]) => (
-              <div key={key} className="flex justify-between items-start gap-2 ">
+              <div
+                key={key}
+                className="flex justify-between items-start gap-2 "
+              >
                 <span>{key}:</span>
 
                 {/* ✅ If children is JSX, render it */}

@@ -14,14 +14,13 @@ interface PropNodeControlProps {
 
 export default function PropNodeControl({
   propName,
-  value,
   onChange,
+  value,
   propConfig,
   scope = {},
 }: PropNodeControlProps) {
-  const placeholderJSX = propConfig.placeholder || "<div>...</div>";
 
-  const initialCode = typeof value === "string" ? value : placeholderJSX;
+
 
   const combinedScope = useMemo(
     () => ({ React, ...scope }),
@@ -33,10 +32,10 @@ export default function PropNodeControl({
       <label className="text-sm text-zinc-300 font-medium">{propName}</label>
 
       <LiveProvider
-
         scope={combinedScope}
         language="jsx"
         noInline={true}
+        code={typeof value === "string" ? value : propConfig.placeholder?.toString() || ""}
       >
         <div className="rounded border border-gray-700">
           <LiveEditor

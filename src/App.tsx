@@ -1,12 +1,12 @@
 import "react-loadly/styles.css";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { FeaturesSection } from "@/components/sections/FeaturesSection";
-import { LoadersShowcaseSection } from "@/components/sections/LoadersShowcaseSection";
-import { PerformanceBestPracticesSection } from "@/components/sections/PerformanceBestPracticesSection";
-import { WhyUseLibrarySection } from "@/components/sections/WhyUseLibrarySection";
-import { FooterSection } from "@/components/sections/FooterSection";
+import { HeroSection } from "@/components/organism/HeroSectionOrganism";
+import { FeaturesSection } from "@/components/organism/FeaturesSectionOrganism";
+import { LoadersShowcaseSection } from "@/components/organism/LoadersShowcaseSectionOrganism";
+import { PerformanceBestPracticesSection } from "@/components/organism/PerformanceBestPracticesSectionOrganism";
+import { WhyUseLibrarySection } from "@/components/organism/WhyUseLibrarySectionOrganism";
+import { FooterSection } from "@/components/organism/FooterSectionOrganism";
 import { InstallationSection } from "./components/sections";
-import { AutoSkeletonLoaderExamples } from "./components/sections/AutoSkeletonLoaderExamples";
+import { AutoSkeletonLoaderExamples } from "./components/organism/AutoSkeletonLoaderExamplesOrganism";
 
 export default function App() {
   return (
