@@ -1,10 +1,6 @@
 import { useState, useMemo, useCallback, type ReactNode } from "react";
 import { Card } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { LOADER_CONFIGS } from "@/utils/LoaderConfig";
@@ -22,13 +18,18 @@ import LoaderShowcaseHeader from "./LoaderShowcaseHeaderOrganism";
 import LoaderShowcaseCardContent from "./LoaderShowcaseCardContentOrganism";
 import SwitchTabs from "./SwitchTabsOrganism";
 import { LoaderDialogHeader } from "./LoaderDialogHeaderOrganism";
-export type PropValues = Record<string, string | number | boolean | ReactNode | undefined>;
+export type PropValues = Record<
+  string,
+  string | number | boolean | ReactNode | undefined
+>;
 
 export function LoadersShowcaseSection() {
   const [activeLoader, setActiveLoader] = useState<LoaderKind>("spin");
   const [isPlaying, setIsPlaying] = useState(true);
   //creating props for each loader
-  const [loaderConfigs, setLoaderConfigs] = useState<Record<LoaderKind, PropValues>>(() => {
+  const [loaderConfigs, setLoaderConfigs] = useState<
+    Record<LoaderKind, PropValues>
+  >(() => {
     const initial: Record<LoaderKind, PropValues> = {} as any;
 
     Object.keys(LOADER_CONFIGS).forEach((loaderKey) => {
@@ -38,7 +39,12 @@ export function LoadersShowcaseSection() {
       // combine default + unique + common props for this loader
       [...loader.commonProps, ...loader.uniqueProps].forEach((prop) => {
         if (prop in DEFAULT_PROPS) {
-          props[prop] = DEFAULT_PROPS[prop];
+          // Special case: squares loader should have count: 1
+          if (loaderKey === "squares" && prop === "count") {
+            props[prop] = 1;
+          } else {
+            props[prop] = DEFAULT_PROPS[prop];
+          }
         }
       });
       initial[loaderKey as LoaderKind] = props;
@@ -68,8 +74,8 @@ export function LoadersShowcaseSection() {
             iface === "IMorphLoaderProps"
               ? UNIQUE_CONTROLS.morphVariant
               : iface === "ISkeletonLoaderProps"
-                ? UNIQUE_CONTROLS.skeletonVariant
-                : UNIQUE_CONTROLS.variant;
+              ? UNIQUE_CONTROLS.skeletonVariant
+              : UNIQUE_CONTROLS.variant;
           return;
         }
 
@@ -77,7 +83,6 @@ export function LoadersShowcaseSection() {
           COMMON_CONTROLS[prop as keyof typeof COMMON_CONTROLS] ??
           UNIQUE_CONTROLS[prop as keyof typeof UNIQUE_CONTROLS];
       }
-
     });
     // Add unique controls
     return controls;
@@ -86,7 +91,6 @@ export function LoadersShowcaseSection() {
   // Handle prop value changes
   const handlePropChange = useCallback(
     (propName: string, value: string | number | boolean | ReactNode) => {
-
       setLoaderConfigs((prev) => ({
         ...prev,
         [activeLoader]: {
@@ -102,15 +106,24 @@ export function LoadersShowcaseSection() {
   const resetProps = useCallback(() => {
     const resetValues: PropValues = {};
     const activeConfig = LOADER_CONFIGS[activeLoader];
-    [...activeConfig.commonProps, ...activeConfig.uniqueProps].forEach((prop) => {
-      if (prop in DEFAULT_PROPS) resetValues[prop] = DEFAULT_PROPS[prop];
-    });
+    [...activeConfig.commonProps, ...activeConfig.uniqueProps].forEach(
+      (prop) => {
+        if (prop in DEFAULT_PROPS) {
+          // Special case: squares loader should have count: 1
+          if (activeLoader === "squares" && prop === "count") {
+            resetValues[prop] = 1;
+          } else {
+            resetValues[prop] = DEFAULT_PROPS[prop];
+          }
+        }
+      }
+    );
 
     setLoaderConfigs((prev) => ({
       ...prev,
       [activeLoader]: resetValues,
     }));
-  }, []);
+  }, [activeLoader]);
 
   return (
     <section
@@ -146,8 +159,10 @@ export function LoadersShowcaseSection() {
                           NEW
                         </Badge>
                       )}
-                      <LoaderShowcaseCardContent loader={loader} propValues={loaderConfigs[key as LoaderKind]} />
-
+                      <LoaderShowcaseCardContent
+                        loader={loader}
+                        propValues={loaderConfigs[key as LoaderKind]}
+                      />
                     </Card>
                   </motion.div>
                 </DialogTrigger>
@@ -161,7 +176,9 @@ export function LoadersShowcaseSection() {
                   <LoaderDialogHeader
                     title={loader.title}
                     interfaceName={loader.interface}
-                    totalProps={loader.commonProps.length + loader.uniqueProps.length}
+                    totalProps={
+                      loader.commonProps.length + loader.uniqueProps.length
+                    }
                     isPlaying={isPlaying}
                     onTogglePlay={() => setIsPlaying(!isPlaying)}
                     onReset={resetProps}
@@ -207,6 +224,6 @@ export function LoadersShowcaseSection() {
           </div>
         </div>
       </div>
-    </section >
+    </section>
   );
 }

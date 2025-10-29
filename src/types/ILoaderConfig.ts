@@ -17,7 +17,6 @@ import type {
   ISnakeLoaderProps,
   ISquaresLoaderProps,
   IHashtagLoaderProps,
-  IFallbackLoaderProps,
   IAutoSkeletonProps,
 } from "react-loadly";
 
@@ -48,7 +47,6 @@ export type LoaderPropsMap = {
   plane: IPlaneLoaderProps;
   hashtag: IHashtagLoaderProps;
   snake: ISnakeLoaderProps;
-  fallback: IFallbackLoaderProps;
 };
 
 type LoaderInterfaces = {
@@ -70,7 +68,6 @@ type LoaderInterfaces = {
   IPlaneLoaderProps: IPlaneLoaderProps;
   ISnakeLoaderProps: ISnakeLoaderProps;
   IHashtagLoaderProps: IHashtagLoaderProps;
-  IFallbackLoaderProps: IFallbackLoaderProps;
   IAutoSkeletonProps: IAutoSkeletonProps;
 };
 
@@ -106,6 +103,5 @@ export const commonProps: (keyof IBaseLoaderProps)[] = [
   "screenWidth",
   "screenHeight",
   "loaderCenter",
-  "screenBackground"
+  "screenBackground",
 ];
-

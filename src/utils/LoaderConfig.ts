@@ -19,7 +19,6 @@ import {
   MorphLoader,
   ProgressRingLoader,
   StairLoader,
-  FallbackLoader,
   SquaresLoader,
   RippleLoader,
   OrbitLoader,
@@ -245,20 +244,4 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     uniqueProps: ["count", "secondaryColor", "borderWidth"],
     isNew: true,
   },
-
-  fallback: {
-    component: FallbackLoader,
-    title: "Fallback Loader",
-    interface: "IFallbackLoaderProps",
-    commonProps,
-    uniqueProps: [
-      "error",
-      "onRetry",
-      "retryLabel",
-      "showRetry",
-      "children",
-      "type",
-    ],
-  },
-
 };
