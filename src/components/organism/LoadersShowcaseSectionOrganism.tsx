@@ -128,14 +128,14 @@ export function LoadersShowcaseSection() {
   return (
     <section
       id="loaders"
-      className="py-20 bg-linear-to-b from-gray-950 via-gray-900 to-gray-950 text-white"
+      className="py-10 sm:py-16 md:py-20 bg-linear-to-b from-gray-950 via-gray-900 to-gray-950 text-white"
     >
-      <div className="container mx-auto px-4 ">
+      <div className="container mx-auto px-4 sm:px-6">
         {/* Enhanced Header */}
         <LoaderShowcaseHeader />
         {/* Enhanced Loader Grid */}
-        <div className="container mx-auto  px-2 md:px-10">
-          <div className="grid grid-cols-1  sm:grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-6 overflow-hidden">
+        <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 overflow-hidden">
             {Object.entries(LOADER_CONFIGS).map(([key, loader]) => (
               <Dialog key={key}>
                 <DialogTrigger asChild>
@@ -167,31 +167,60 @@ export function LoadersShowcaseSection() {
                   </motion.div>
                 </DialogTrigger>
 
-                {/* Enhanced Dialog */}
+                {/* Enhanced Dialog - Fully Responsive */}
                 <DialogContent
-                  className="max-w-7xl h-full w-[95vw] sm:h-[80vh] overflow-hidden
+                  className="max-w-7xl 
+                           h-dvh sm:h-[95vh] md:h-[90vh] lg:h-[85vh]
+                           w-full sm:w-[98vw] md:w-[95vw] lg:w-[90vw] xl:w-[85vw]
+                           max-h-dvh sm:max-h-[95vh] md:max-h-[90vh]
+                           overflow-hidden
                            bg-linear-to-br from-gray-900 to-gray-950 
-                           border border-gray-800 rounded-2xl shadow-2xl text-white p-3 "
+                           border-0 sm:border border-gray-800 
+                           rounded-none sm:rounded-xl md:rounded-2xl 
+                           shadow-2xl text-white 
+                           p-0 sm:p-2 md:p-3 lg:p-4
+                           flex flex-col
+                           !left-0 !top-0 
+                           sm:!left-[50%] sm:!top-[50%] 
+                           !translate-x-0 !translate-y-0 
+                           sm:!translate-x-[-50%] sm:!translate-y-[-50%]"
                 >
-                  <LoaderDialogHeader
-                    title={loader.title}
-                    interfaceName={loader.interface}
-                    totalProps={
-                      loader.commonProps.length + loader.uniqueProps.length
-                    }
-                    isPlaying={isPlaying}
-                    onTogglePlay={() => setIsPlaying(!isPlaying)}
-                    onReset={resetProps}
-                  />
+                  {/* Header Section - Responsive */}
+                  <div className="shrink-0 mb-0 sm:mb-2 md:mb-4 px-2 sm:px-0">
+                    <LoaderDialogHeader
+                      title={loader.title}
+                      interfaceName={loader.interface}
+                      totalProps={
+                        loader.commonProps.length + loader.uniqueProps.length
+                      }
+                      isPlaying={isPlaying}
+                      onTogglePlay={() => setIsPlaying(!isPlaying)}
+                      onReset={resetProps}
+                    />
+                  </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-full min-h-0">
-                    {/* Enhanced Controls */}
-                    <div className="p-4 md:p-6 space-y-4 flex flex-col min-h-0 md:min-h-full md:border-e border-gray-800/50 bg-zinc-900/40 rounded-xl md:rounded-none">
-                      <div className="flex-1 overflow-y-auto scrollbar-beauty h-full">
-                        <h4 className="font-semibold text-gray-200  flex items-center gap-2">
-                          <span className="w-2 h-2 bg-red-500 rounded-full"></span>
+                  {/* Main Content Grid - Responsive Layout */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 flex-1 min-h-0 overflow-hidden px-2 sm:px-0 pb-2 sm:pb-0">
+                    {/* Controls Panel - Responsive */}
+                    <div
+                      className="
+                      p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 
+                      space-y-2 sm:space-y-3 md:space-y-4 
+                      flex flex-col min-h-0 
+                      lg:border-r border-gray-800/50 
+                      bg-zinc-900/40 
+                      rounded-lg sm:rounded-xl lg:rounded-none 
+                      overflow-hidden
+                    "
+                    >
+                      <h4 className="font-semibold text-gray-200 text-xs sm:text-sm md:text-base flex items-center gap-1.5 sm:gap-2 shrink-0">
+                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-500 rounded-full"></span>
+                        <span className="hidden sm:inline">
                           Customize Properties
-                        </h4>
+                        </span>
+                        <span className="sm:hidden">Properties</span>
+                      </h4>
+                      <div className="flex-1 overflow-y-auto scrollbar-beauty min-h-0 -mx-1 sm:mx-0 px-1 sm:px-0">
                         <LoaderControls
                           controls={propControls}
                           values={loaderConfigs[activeLoader]}
@@ -199,8 +228,19 @@ export function LoadersShowcaseSection() {
                         />
                       </div>
                     </div>
-                    <div className="p-4 md:p-6 space-y-4 flex flex-col min-h-0 bg-zinc-900/40 rounded-xl md:rounded-none">
-                      <div className="flex-1 overflow-y-auto scrollbar-beauty">
+
+                    {/* Preview/Code Panel - Responsive */}
+                    <div
+                      className="
+                      p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 
+                      space-y-2 sm:space-y-3 md:space-y-4 
+                      flex flex-col min-h-0 
+                      bg-zinc-900/40 
+                      rounded-lg sm:rounded-xl lg:rounded-none 
+                      overflow-hidden
+                    "
+                    >
+                      <div className="flex-1 overflow-y-auto scrollbar-beauty min-h-0 -mx-1 sm:mx-0 px-1 sm:px-0">
                         <SwitchTabs
                           preview={
                             <LoaderPreview
