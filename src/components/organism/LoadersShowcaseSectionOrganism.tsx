@@ -20,6 +20,14 @@ import SwitchTabs from "./SwitchTabsOrganism";
 import { LoaderDialogHeader } from "./LoaderDialogHeaderOrganism";
 const LazyCodeSnippet = React.lazy(() => import('@/components/organism/CodeSnippetOrganism').then(m => ({ default: m.CodeSnippet })));
 const LazyLoaderPreview = React.lazy(() => import('@/components/organism/LoaderPreviewOrganism').then(m => ({ default: m.LoaderPreview })));
+type AnyLoaderComponent = React.ComponentType<any>;
+const LAZY_LOADER_MAP = Object.fromEntries(
+  Object.entries(LOADER_CONFIGS).map(([key, config]) => [
+    key as LoaderKind,
+    React.lazy(config.component as () => Promise<{ default: AnyLoaderComponent }>),,
+  ])
+);
+
 export type PropValues = Record<
   string,
   string | number | boolean | ReactNode | undefined
@@ -61,6 +69,10 @@ export function LoadersShowcaseSection() {
     return LOADER_CONFIGS[activeLoader] || Object.values(LOADER_CONFIGS)[0];
   }, [activeLoader]);
 
+  const ActiveLazyComponent = useMemo(() => {
+    // THIS is the React component for rendering
+    return LAZY_LOADER_MAP[activeLoader];
+}, [activeLoader]);
   //current props to pass to preview and code snippet
   const currentProps = useMemo(() => {
     const props = loaderConfigs[activeLoader] || {};
@@ -252,6 +264,7 @@ export function LoadersShowcaseSection() {
                             <LazyLoaderPreview
                               activeLoaderData={activeLoaderData}
                               currentProps={currentProps}
+                              ActiveLoaderComponent={ActiveLazyComponent}
                             />
                           </Suspense>}
 
