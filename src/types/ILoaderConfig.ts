@@ -75,9 +75,12 @@ export type LoaderInterfaceName = keyof LoaderInterfaces;
 
 export type LoaderKind = keyof LoaderPropsMap;
 
+// This function must return a Promise that resolves to an object 
+// containing the React Component as its 'default' export.
+type DynamicLoaderFunction<P> = () => Promise<{ default: React.ComponentType<P> }>;
 // Make the uniqueProps array more flexible to avoid type conflicts
 export interface ILoaderConfig<K extends LoaderKind> {
-  component: React.ComponentType<LoaderPropsMap[K]>;
+  component: DynamicLoaderFunction<LoaderPropsMap[K]>;
   title: string;
   interface: LoaderInterfaceName;
   commonProps: (keyof IBaseLoaderProps)[];

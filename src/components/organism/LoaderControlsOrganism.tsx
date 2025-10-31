@@ -26,7 +26,7 @@ export function LoaderControls({
   onChange,
 }: LoaderControlsProps) {
   // Build only groups that exist and in order
-  console.log('LoaderControls controls:', controls);
+
   const grouped = getGroupsForTabs(controls);
 
   const renderPropControl = (

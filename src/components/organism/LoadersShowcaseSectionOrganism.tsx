@@ -1,12 +1,12 @@
-import { useState, useMemo, useCallback, type ReactNode } from "react";
+import React, { useState, useMemo, useCallback, type ReactNode, Suspense } from "react";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { LOADER_CONFIGS } from "@/utils/LoaderConfig";
-import { LoaderPreview } from "@/components/organism/LoaderPreviewOrganism";
+//import { LoaderPreview } from "@/components/organism/LoaderPreviewOrganism";
 import { LoaderControls } from "@/components/organism/LoaderControlsOrganism";
-import { CodeSnippet } from "@/components/organism/CodeSnippetOrganism";
+//import { CodeSnippet } from "@/components/organism/CodeSnippetOrganism";
 import {
   COMMON_CONTROLS,
   UNIQUE_CONTROLS,
@@ -18,6 +18,8 @@ import LoaderShowcaseHeader from "./LoaderShowcaseHeaderOrganism";
 import LoaderShowcaseCardContent from "./LoaderShowcaseCardContentOrganism";
 import SwitchTabs from "./SwitchTabsOrganism";
 import { LoaderDialogHeader } from "./LoaderDialogHeaderOrganism";
+const LazyCodeSnippet = React.lazy(() => import('@/components/organism/CodeSnippetOrganism').then(m => ({ default: m.CodeSnippet })));
+const LazyLoaderPreview = React.lazy(() => import('@/components/organism/LoaderPreviewOrganism').then(m => ({ default: m.LoaderPreview })));
 export type PropValues = Record<
   string,
   string | number | boolean | ReactNode | undefined
@@ -26,6 +28,7 @@ export type PropValues = Record<
 export function LoadersShowcaseSection() {
   const [activeLoader, setActiveLoader] = useState<LoaderKind>("spin");
   const [isPlaying, setIsPlaying] = useState(true);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   //creating props for each loader
   const [loaderConfigs, setLoaderConfigs] = useState<
     Record<LoaderKind, PropValues>
@@ -74,8 +77,8 @@ export function LoadersShowcaseSection() {
             iface === "IMorphLoaderProps"
               ? UNIQUE_CONTROLS.morphVariant
               : iface === "ISkeletonLoaderProps"
-              ? UNIQUE_CONTROLS.skeletonVariant
-              : UNIQUE_CONTROLS.variant;
+                ? UNIQUE_CONTROLS.skeletonVariant
+                : UNIQUE_CONTROLS.variant;
           return;
         }
 
@@ -136,9 +139,10 @@ export function LoadersShowcaseSection() {
         {/* Enhanced Loader Grid */}
         <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 overflow-hidden">
-            {Object.entries(LOADER_CONFIGS).map(([key, loader]) => (
-              <Dialog key={key}>
-                <DialogTrigger asChild>
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              {Object.entries(LOADER_CONFIGS).map(([key, loader]) => (
+
+                <DialogTrigger key={key} asChild>
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -147,6 +151,7 @@ export function LoadersShowcaseSection() {
                     className="group cursor-pointer"
                     onClick={() => {
                       setActiveLoader(key as LoaderKind);
+                      setIsDialogOpen(true);
                     }}
                   >
                     <Card
@@ -166,10 +171,10 @@ export function LoadersShowcaseSection() {
                     </Card>
                   </motion.div>
                 </DialogTrigger>
-
-                {/* Enhanced Dialog - Fully Responsive */}
-                <DialogContent
-                  className="max-w-7xl 
+              ))}
+              {/* Enhanced Dialog - Fully Responsive */}
+              <DialogContent
+                className="max-w-7xl 
                            h-dvh sm:h-[95vh] md:h-[90vh] lg:h-[85vh]
                            w-full sm:w-[98vw] md:w-[95vw] lg:w-[90vw] xl:w-[85vw]
                            max-h-dvh sm:max-h-[95vh] md:max-h-[90vh]
@@ -180,30 +185,30 @@ export function LoadersShowcaseSection() {
                            shadow-2xl text-white 
                            p-0 sm:p-2 md:p-3 lg:p-4
                            flex flex-col
-                           !left-0 !top-0 
-                           sm:!left-[50%] sm:!top-[50%] 
-                           !translate-x-0 !translate-y-0 
+                           left-0! top-0! 
+                           sm:left-[50%]! sm:top-[50%]! 
+                           translate-x-0! !translate-y-0 
                            sm:!translate-x-[-50%] sm:!translate-y-[-50%]"
-                >
-                  {/* Header Section - Responsive */}
-                  <div className="shrink-0 mb-0 sm:mb-2 md:mb-4 px-2 sm:px-0">
-                    <LoaderDialogHeader
-                      title={loader.title}
-                      interfaceName={loader.interface}
-                      totalProps={
-                        loader.commonProps.length + loader.uniqueProps.length
-                      }
-                      isPlaying={isPlaying}
-                      onTogglePlay={() => setIsPlaying(!isPlaying)}
-                      onReset={resetProps}
-                    />
-                  </div>
+              >
+                {/* Header Section - Responsive */}
+                <div className="shrink-0 mb-0 sm:mb-2 md:mb-4 px-2 sm:px-0">
+                  <LoaderDialogHeader
+                    title={activeLoaderData.title}
+                    interfaceName={activeLoaderData.interface}
+                    totalProps={
+                      activeLoaderData.commonProps.length + activeLoaderData.uniqueProps.length
+                    }
+                    isPlaying={isPlaying}
+                    onTogglePlay={() => setIsPlaying(!isPlaying)}
+                    onReset={resetProps}
+                  />
+                </div>
 
-                  {/* Main Content Grid - Responsive Layout */}
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 flex-1 min-h-0 overflow-hidden px-2 sm:px-0 pb-2 sm:pb-0">
-                    {/* Controls Panel - Responsive */}
-                    <div
-                      className="
+                {/* Main Content Grid - Responsive Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 sm:gap-3 md:gap-4 lg:gap-6 flex-1 min-h-0 overflow-hidden px-2 sm:px-0 pb-2 sm:pb-0">
+                  {/* Controls Panel - Responsive */}
+                  <div
+                    className="
                       p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 
                       space-y-2 sm:space-y-3 md:space-y-4 
                       flex flex-col min-h-0 
@@ -212,26 +217,26 @@ export function LoadersShowcaseSection() {
                       rounded-lg sm:rounded-xl lg:rounded-none 
                       overflow-hidden
                     "
-                    >
-                      <h4 className="font-semibold text-gray-200 text-xs sm:text-sm md:text-base flex items-center gap-1.5 sm:gap-2 shrink-0">
-                        <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-500 rounded-full"></span>
-                        <span className="hidden sm:inline">
-                          Customize Properties
-                        </span>
-                        <span className="sm:hidden">Properties</span>
-                      </h4>
-                      <div className="flex-1 overflow-y-auto scrollbar-beauty min-h-0 -mx-1 sm:mx-0 px-1 sm:px-0">
-                        <LoaderControls
-                          controls={propControls}
-                          values={loaderConfigs[activeLoader]}
-                          onChange={handlePropChange}
-                        />
-                      </div>
+                  >
+                    <h4 className="font-semibold text-gray-200 text-xs sm:text-sm md:text-base flex items-center gap-1.5 sm:gap-2 shrink-0">
+                      <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-red-500 rounded-full"></span>
+                      <span className="hidden sm:inline">
+                        Customize Properties
+                      </span>
+                      <span className="sm:hidden">Properties</span>
+                    </h4>
+                    <div className="flex-1 overflow-y-auto scrollbar-beauty min-h-0 -mx-1 sm:mx-0 px-1 sm:px-0">
+                      <LoaderControls
+                        controls={propControls}
+                        values={loaderConfigs[activeLoader]}
+                        onChange={handlePropChange}
+                      />
                     </div>
+                  </div>
 
-                    {/* Preview/Code Panel - Responsive */}
-                    <div
-                      className="
+                  {/* Preview/Code Panel - Responsive */}
+                  <div
+                    className="
                       p-2 sm:p-3 md:p-4 lg:p-5 xl:p-6 
                       space-y-2 sm:space-y-3 md:space-y-4 
                       flex flex-col min-h-0 
@@ -239,28 +244,32 @@ export function LoadersShowcaseSection() {
                       rounded-lg sm:rounded-xl lg:rounded-none 
                       overflow-hidden
                     "
-                    >
-                      <div className="flex-1 overflow-y-auto scrollbar-beauty min-h-0 -mx-1 sm:mx-0 px-1 sm:px-0">
-                        <SwitchTabs
-                          preview={
-                            <LoaderPreview
+                  >
+                    <div className="flex-1 overflow-y-auto scrollbar-beauty min-h-0 -mx-1 sm:mx-0 px-1 sm:px-0">
+                      <SwitchTabs
+                        preview={
+                          <Suspense fallback={<div className="flex h-full w-full items-center justify-center">Loading Preview...</div>}>
+                            <LazyLoaderPreview
                               activeLoaderData={activeLoaderData}
                               currentProps={currentProps}
                             />
-                          }
-                          code={
-                            <CodeSnippet
+                          </Suspense>}
+
+                        code={
+                          <Suspense fallback={<div className="flex h-full w-full items-center justify-center">Loading Code...</div>}>
+                            <LazyCodeSnippet
                               activeLoaderData={activeLoaderData}
                               currentProps={currentProps}
                             />
-                          }
-                        />
-                      </div>
+                          </Suspense>
+                        }
+                      />
                     </div>
                   </div>
-                </DialogContent>
-              </Dialog>
-            ))}
+                </div>
+              </DialogContent>
+            </Dialog>
+
           </div>
         </div>
       </div>

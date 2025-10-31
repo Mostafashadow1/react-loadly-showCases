@@ -64,7 +64,6 @@ export function LoaderPreview({
         props.children = elementProps.children;
       }
     }
-    console.log(props, "relevant props");
     return props;
   }, [activeLoaderData, currentProps]);
 
