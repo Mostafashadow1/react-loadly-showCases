@@ -1,4 +1,4 @@
-import { useMemo, type ReactNode } from "react";
+import React, { useMemo, type ReactNode } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { truncateText } from "@/utils/truncateText";
 import type { LoaderKind, LoaderPropsMap } from "@/types/ILoaderConfig";
@@ -7,13 +7,15 @@ import { transformJSXToNode } from "@/lib/transformToNode";
 interface LoaderPreviewProps {
   activeLoaderData: any;
   currentProps: Partial<LoaderPropsMap[LoaderKind]>;
+  ActiveLoaderComponent: React.ComponentType<any>;
 }
 
 export function LoaderPreview({
   activeLoaderData,
   currentProps,
+  ActiveLoaderComponent: LazyComponent,
 }: LoaderPreviewProps) {
-  const ActiveLoaderComponent = activeLoaderData.component;
+//const activeLoaderComponent = activeLoaderData.component
 
   // Filter props to only include those relevant to the current loader
   const relevantProps = useMemo(() => {
@@ -64,7 +66,6 @@ export function LoaderPreview({
         props.children = elementProps.children;
       }
     }
-    console.log(props, "relevant props");
     return props;
   }, [activeLoaderData, currentProps]);
 
@@ -110,7 +111,7 @@ export function LoaderPreview({
   return (
     <div className="flex flex-col items-center justify-center bg-gray-900/50 border-r border-gray-800 p-6 h-full">
       <div className="mb-6 relative h-full w-full flex items-center justify-center">
-        <ActiveLoaderComponent
+        <LazyComponent
           {...(relevantProps as LoaderPropsMap[LoaderKind])}
         />
       </div>

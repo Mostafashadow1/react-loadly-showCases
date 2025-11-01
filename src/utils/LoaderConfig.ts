@@ -1,32 +1,4 @@
 import {
-  BarsLoader,
-  DotsLoader,
-  GridLoader,
-  LogoSpinLoader,
-  PulseLoader,
-  RingLoader,
-  SpinLoader,
-  TypingLoader,
-  WaveLoader,
-  BlobLoader,
-  FlowLoader,
-  RotateLoader,
-  ElementLoader,
-  BounceLoader,
-  SkeletonLoader,
-  SpinDotsLoader,
-  HeatmapLoader,
-  MorphLoader,
-  ProgressRingLoader,
-  StairLoader,
-  SquaresLoader,
-  RippleLoader,
-  OrbitLoader,
-  PlaneLoader,
-  HashtagLoader,
-  SnakeLoader,
-} from "react-loadly";
-import {
   commonProps,
   type ILoaderConfig,
   type LoaderKind,
@@ -34,98 +6,98 @@ import {
 
 export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   spin: {
-    component: SpinLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.SpinLoader })),
     title: "Spin Loader",
     interface: "IBaseLoaderProps",
     commonProps: commonProps,
     uniqueProps: [],
   },
   pulse: {
-    component: PulseLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.PulseLoader })),
     title: "Pulse Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["count", "borderWidth"],
   },
   wave: {
-    component: WaveLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.WaveLoader })),
     title: "Wave Loader",
     interface: "IFluidLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["fluidity", "amplitude", "secondaryColor"],
   },
   grid: {
-    component: GridLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.GridLoader })),
     title: "Grid Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
   typing: {
-    component: TypingLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.TypingLoader })),
     title: "Typing Loader",
     interface: "ITextLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["loop", "charDelay", "fontWeight", "fontFamily"],
   },
   logo: {
-    component: LogoSpinLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.LogoSpinLoader })),
     title: "Logo Loader",
     interface: "ILogoLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["src", "alt", "animationType", "glowIntensity"],
   },
   bars: {
-    component: BarsLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.BarsLoader })),
     title: "Bars Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
   dots: {
-    component: DotsLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.DotsLoader })),
     title: "Dots Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
   blob: {
-    component: BlobLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.BlobLoader })),
     title: "Blob Loader",
     interface: "IFluidLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["fluidity", "amplitude", "secondaryColor"],
   },
   ring: {
-    component: RingLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.RingLoader })),
     title: "Ring Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["borderWidth", "count"],
   },
   flow: {
-    component: FlowLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.FlowLoader })),
     title: "Flow Loader",
     interface: "IFluidLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["fluidity", "amplitude", "secondaryColor"],
   },
   rotate: {
-    component: RotateLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.RotateLoader })),
     title: "Rotate Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["count", "borderWidth", "secondaryColor"],
   },
   element: {
-    component: ElementLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.ElementLoader })),
     title: "Element Loader",
     interface: "IElementLoaderProps",
     commonProps: commonProps,
     uniqueProps: ["animationType", "children", "glowIntensity"],
   },
   bounce: {
-    component: BounceLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.BounceLoader })),
     title: "Bounce Loader",
     interface: "IGeometricLoaderProps",
     commonProps: commonProps,
@@ -133,7 +105,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   },
 
   skeleton: {
-    component: SkeletonLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.SkeletonLoader })),
     title: "Skeleton Loader",
     interface: "ISkeletonLoaderProps",
     commonProps: commonProps,
@@ -152,7 +124,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   },
 
   spinDots: {
-    component: SpinDotsLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.SpinDotsLoader })),
     title: "Spin Dots Loader",
     interface: "ISpinDotsLoaderProps",
     commonProps: commonProps,
@@ -160,7 +132,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     isNew: true,
   },
   heatmap: {
-    component: HeatmapLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.HeatmapLoader })),
     title: "Heatmap Loader",
     interface: "IHeatmapLoaderProps",
     commonProps: commonProps,
@@ -168,7 +140,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     isNew: true,
   },
   morph: {
-    component: MorphLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.MorphLoader })),
     title: "Morph Loader",
     interface: "IMorphLoaderProps",
     commonProps: commonProps,
@@ -176,7 +148,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     isNew: true,
   },
   progressRing: {
-    component: ProgressRingLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.ProgressRingLoader })),
     title: "Progress Ring Loader",
     interface: "IProgressRingLoaderProps",
     commonProps: commonProps,
@@ -184,7 +156,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     isNew: true,
   },
   stair: {
-    component: StairLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.StairLoader })),
     title: "Stair Loader",
     interface: "IStairLoaderProps",
     commonProps: commonProps,
@@ -192,7 +164,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
     isNew: true,
   },
   squares: {
-    component: SquaresLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.SquaresLoader })),
     title: "Squares Loader",
     interface: "ISquaresLoaderProps",
     commonProps,
@@ -201,7 +173,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   },
 
   ripple: {
-    component: RippleLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.RippleLoader })),
     title: "Ripple Loader",
     interface: "IRippleLoaderProps",
     commonProps,
@@ -210,7 +182,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   },
 
   orbit: {
-    component: OrbitLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.OrbitLoader })),
     title: "Orbit Loader",
     interface: "IOrbitLoaderProps",
     commonProps,
@@ -219,7 +191,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   },
 
   plane: {
-    component: PlaneLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.PlaneLoader })),
     title: "Plane Loader",
     interface: "IPlaneLoaderProps",
     commonProps,
@@ -228,7 +200,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   },
 
   hashtag: {
-    component: HashtagLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.HashtagLoader })),
     title: "Hashtag Loader",
     interface: "IHashtagLoaderProps",
     commonProps,
@@ -237,7 +209,7 @@ export const LOADER_CONFIGS: { [K in LoaderKind]: ILoaderConfig<K> } = {
   },
 
   snake: {
-    component: SnakeLoader,
+    component: () => import('react-loadly').then(m => ({ default: m.SnakeLoader })),
     title: "Snake Loader",
     interface: "ISnakeLoaderProps",
     commonProps,
