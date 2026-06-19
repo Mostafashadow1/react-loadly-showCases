@@ -84,8 +84,8 @@ importers:
         specifier: ^4.1.8
         version: 4.1.8(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-loadly:
-        specifier: ^2.3.0
-        version: 2.3.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+        specifier: ^2.3.2
+        version: 2.3.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       shiki:
         specifier: ^3.14.0
         version: 3.14.0
@@ -2055,8 +2055,8 @@ packages:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
 
-  react-loadly@2.3.0:
-    resolution: {integrity: sha512-j+G2/LVySdK5SzpCL71GbcWuEhai9HEwzTVBaGAXMoLCool7XGAvXOqse+0UnwlGdG4FUSN1Aj+AeU84tNTllQ==}
+  react-loadly@2.3.2:
+    resolution: {integrity: sha512-/m57qaBkjVdbbdYZj/LiTnfwP8w71I455b1LBagUS7jW+G2zlncaby5+ClU5JYC4ZgGQsECYiz+Q7F+T/I923g==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       react: '>=16.8.0'
@@ -4280,7 +4280,7 @@ snapshots:
       sucrase: 3.35.0
       use-editable: 2.3.3(react@19.2.0)
 
-  react-loadly@2.3.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
+  react-loadly@2.3.2(react-dom@19.2.0(react@19.2.0))(react@19.2.0):
     dependencies:
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
